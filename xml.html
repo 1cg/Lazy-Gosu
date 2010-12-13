@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>XML</h1>
+      <p>XML is like English: unclear how or why it won out, but it's dug in like a tick at this point and there doesn't seem like a lot of upside to fighting it.  And, who knows, perhaps there is a deeper spiritual meaning behind all the suffering it causes.</p>
+      <p>Gosu gives you a few ways to minimize the pain:</p>
+      <h2>Untyped XML</h2>
+      <p>If you just want to work with XML in an untyped, easy-peasy way, you can use <code>gw.xml.simple.SimpleXmlNode</code>:
+      <pre class="prettyprint">
+  uses gw.xml.simple.SimpleXmlNode
+
+  var xml = SimpleXmlNode.parse( "&lt;foo attr1='doh'>&lt;bar attr2='rey'/>&lt;/foo>" )
+  print( xml.Attributes["attr1"] )
+  print( xml.Children[0].Attributes["attr2"] )
+  print( xml.toXmlString() )
+      </pre>
+      You can use the <code>Descendents</code> property to get ahold of a collection of all children of a Node, which allows you to apply block-based slicing and dicing:
+      <pre class="prettyprint">
+  var allReys = xml.Descendents.where( \ n -> n.Attributes["attr2"] == "rey" )
+      </pre>
+      Pretty easy to deal with.
+      </p>
+      
+      <h2>XSD</h2>
+      <p><b>TODO</b></p>
+
+      <h2>WSDL</h2>
+      <p><b>TODO</b></p>
+    </div>
+  </body>
+</html>

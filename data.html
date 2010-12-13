@@ -1,0 +1,120 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Data</h1>
+      <p>Data structures are probably the most important feature of a language when it comes to developer productivity.  Java has some great core implementations of data structures, like <code>java.util.ArrayList</code> and <code>java.util.HashTable</code>, but doesn't help you much when you want to manipulate them.</p>
+      <p>Gosu adds some functionality to the core data structures in Java, and provides some additional syntactic support for them as well.</p>
+
+      <h2>Lists</h2>
+      <p>As you may have noticed, a list in Gosu can be declared by using <code>{}</code>'s:
+      <pre class="prettyprint">
+  var lstOfStrings = {"This", "is", "a", "list"}
+      </pre>
+      You can also use Array-style access on lists:
+      <pre class="prettyprint">
+  var lstOfStrings = {"This", "is", "a", "list"}
+  print( lstOfStrings[2] ) // prints "a"
+      </pre>
+      </p>      
+      <h3>Blocks</h3>
+      <p>Lists have a lot of enhancement methods on them, many of which use blocks.  Blocks (also called closures or lambda expressions) are a simple way to specify an inline function.  They have a lot of uses, but they are absolute butter when it comes to data structure manipulation:
+      <pre class="prettyprint">
+  var lstOfStrings = {"This", "is", "a", "list"}
+  var longStrings = lstOfStrings.where( \ s -> s.length > 2 )
+  print( longStrings.join(", ") )  // prints "This, list"
+      </pre>
+      That funny <code>\-></code> thing is the block.  It declares a mini-function that says "Given a String <code>s</code> return whether <code>s.length</code> is greater than two".  You can think of it as an inline version of this function:
+      <pre class="prettyprint">
+  function isLongerThanTwo( s : String ) : boolean {
+    return s.length > 2
+  }
+      </pre>
+      You can see why the block syntax is preferred.
+      </p>
+      <p>
+      Note that you don't have to declare the parameter type for <code>s</code>.  Gosu figures that out for you.
+      </p>
+      <p>By using blocks, you can often remove reams of iterative code you would end up writing in Java:
+      <pre class="prettyprint">
+  var lstOfStrings = {"This", "is", "a", "list"}
+  var longStrings = lstOfStrings.where( \ s -> s.length > 2 )
+                                .map( \ s -> s.toUpperCase() )  // converts each string to upper case
+                                .orderBy( \ s -> s )            // there is a .order() method that could be used here instead
+  print( longStrings.join(", ") ) // prints "LIST, THIS"
+      </pre>
+      </p>
+
+      <h3>List Enhancements</h3>
+      <p>Here are some of the more useful enhancement methods on Lists:</p>
+      <ul>
+        <li><code>map()</code> - transforms each element in a list with the given block</li>
+        <li><code>orderBy()</code> - creates a new list ordered by the value returned by the given block</li>
+        <li><code>thenBy()</code> - once you've called <code>orderBy</code> on a List, you can call <code>thenBy</code> to add additional sorting conditions</li>
+        <li><code>where()</code> - creates a new list of all elements that return <code>true</code> for the given block</li>
+        <li><code>whereTypeIs()</code> - returns a new list where all elements have the given type</li>
+        <li><code>first()/last()</code> - return the first and last element of the list, respectively</li>
+        <li><code>firstWhere()/lastWhere()</code> - return the first and last element of the list that match the given block, respectively</li>
+        <li><code>partition()</code> - converts the List to a Map, where the keys are the values returned by the given block, and the values are Lists of all elements that mapped to that key</li>
+        <li><code>toSet()</code> - converts the List to a Set</li>
+        <li><code>join()</code> - converts the List to String, using the given string as a delimiter between each element</li>
+        <li><code>maxBy()</code> - returns the element in the list that has the maximum value returned by the given block</li>
+        <li><code>toTypedArray()</code> - returns a strongly typed array of the List (e.g. List&lt;String> returns a String[])</li>
+      </ul>
+      There are more.  Code completion is your friend.
+      </p>
+
+      <h2>Maps</h2>
+      <p>Maps can be declared by using <code>{}</code>'s with a right-arrow between keys and values:
+      <pre class="prettyprint">
+  var mapOfStringsToStrings = {"This" -> "is", "a" -> "map"}
+      </pre>
+      You can also use Array-style access on maps:
+      <pre class="prettyprint">
+  var mapOfStringsToStrings = {"This" -> "is", "a" -> "map"}
+  print( mapOfStringsToStrings["This"] ) // prints "is"
+      </pre>
+      </p>      
+      <h3>Map Enhancements</h3>
+      <p>There are fewer enhancement methods on Maps than Lists, but there are some:</p>
+      <ul>
+        <li><code>mapValues()</code> - transforms each value with the given block and returns the resulting map</li>
+        <li><code>writeToPropertiesFile()</code> - Calls .toString() on each key and value, and save the result to the properties file passed in.</li>
+        <li><code>Map.readFromPropertiesFile()</code> - A static method that returns a <code>Map&lt;String, String></code> from the given properties file</li>       
+      </ul>
+      One useful trick is to use methods on <code>Map.entrySet()</code> to modify the Map:
+      <pre class="prettyprint">
+  var mapOfStringsToStrings = {"This" -> "is", "a" -> "map"}
+  // removes all entries with a key whose length is less than 2
+  mapOfStringsToStrings.entrySet().retainWhere( \ p -> p.Key.length > 2  )
+      </pre>
+      </p>
+    </div>
+  </body>
+</html>

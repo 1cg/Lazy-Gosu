@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Generics</h1>
+      <p>Gosu supports Java-style Generics, but the rules are slightly different:
+        <ul>
+          <li>There are no wildcards</li>
+          <li>Type parameters are <a href="http://en.wikipedia.org/wiki/Covariance">covariant</a>.  This is not sound, and that does not matter.</li>
+        </ul>
+     </p>
+     <h2>Using Generics</h2>
+     <p>You use generics just like you do in Java:
+     <pre class="prettyprint">
+  var lst = new java.util.List&lt;String>()
+  lst.add("A String")
+  for( s in lst ) {
+   print( '"${s}" has length ${s.length}')
+  }
+     </pre>
+     Everything is statically typed and, thus, can support code completion.
+     </p>
+    <p>When I say type parameters are covariant, what I mean is that this code works:
+    <pre class="prettyprint">
+ var lst = new java.util.List&lt;String>()
+ lst.add("A String")
+ var lstOfObjs : List&lt;Object> = lst // This assignment is allowed, since String is assignable to Object
+    </pre>
+    Technically, this is unsound, because you could do this:
+    <pre class="prettyprint">
+  lstOfObjs.add( 11 ) // oops
+    </pre>
+    Tell you what.  You promise not to do that, and I promise not to make you deal with wildcards.
+    </p>
+    <p>You drive a hard bargain.</p>  
+    <p>OK, what if I throw in a properly typed <code>List.contains()</code> method as well:
+    <pre class="prettyprint">
+ var lst = new java.util.List&lt;String>()
+ lst.contains( 10 ) // compilation error in Gosu, unlike <a href="http://download.oracle.com/javase/6/docs/api/java/util/LinkedList.html#contains(java.lang.Object)">Java</a> and <a href="http://www.scala-lang.org/api/2.7.7/scala/Seq.html#contains%28Any%29">Scala</a>
+    </pre>
+    Deal?
+    </p>
+     <h2>Generic Classes</h2>
+     <p>You declare type variables just like you do in Java:
+     <pre class="prettyprint">
+  package example
+  
+  class MyGenericClass&lt;T> {
+    _tee : T as readonly Tee
+    
+    construct( tee : T ) {
+      _tee = tee
+    }
+  }
+     </pre>
+     <p>You can constrain type variables just like you do in Java:
+      <pre class="prettyprint">
+   package example
+
+   class MyGenericClass&lt;T extends Runnable> {
+     _tee : T as readonly Tee
+
+     construct( tee : T ) {
+       _tee = tee
+     }
+   }
+      </pre>
+      </p>
+      <p>You can refer to type variables as expressions:
+      <pre class="prettyprint">
+  package example
+  
+  uses gw.lang.reflect.IType
+  
+  class MyGenericClass&lt;T> {
+    _tee : T as readonly Tee
+
+    construct( tee : T ) {
+      _tee = tee
+    }
+    
+    property get TeeType : IType {
+      return T
+    }
+  }
+      </pre>
+      </p>
+      <p>You can also declare generic functions:
+      <pre class="prettyprint">
+  package example
+
+  class MyGenericClass&lt;T> {
+    _tee : T as readonly Tee
+
+    construct( tee : T ) {
+      _tee = tee
+    }
+    
+    static function create&lt;T2>( val : T2 ) : MyGenericClass&lt;T2> {
+      return new MyGenericClass&lt;T2>( val )
+    }
+  }  
+      </pre>
+      which are invoked as you would expect:
+      <pre class="prettyprint">
+  var x = MyGenericClass.create&lt;String>("A String")
+      </pre>
+      Of course, you can just let type inference do its thing as well:
+      </p>
+      <pre class="prettyprint">
+  var x = MyGenericClass.create("A String") // Still typed as MyGenericClass&lt;String> thanks to type inference
+      </pre>
+      <h2>Reification</h2>
+      Gosu makes a best effort to reify type variables.  The rules are:
+      <ul>
+        <li>Type variables on Gosu classes are dynamically reified</li>
+        <li>Type variables on Gosu functions are statically reified</li>
+        <li>Type variables on Gosu enhancements (regardless of the  enhanced type) are statically reified</li>
+      </ul>
+      Practically, the distinction between statically and dynamically reified type variables rarely matters, but it is something to keep in mind.
+      </p>
+    </div>
+  </body>
+</html>

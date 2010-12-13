@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Strings/IO</h1>
+      <p>Strings and IO are among the most important aspects of practical programming.  This is why Java makes them both difficult to deal with.</p>
+
+      <h2>Strings</h2>
+      <p>Strings in gosu can be delimited with either a single or double quote, which allows you to embed the other without awkward escaping:
+      <pre class="prettyprint">
+  var strWithDoubleQuote = 'This is a "string"'
+  var strWithSingleQuote = "This is a 'string'"
+      </pre>
+      You can, of course, use the <code>+</code> operator to concatenate:
+      <pre class="prettyprint">
+  print( "Hello" + " " + "World" )
+      </pre>
+      You can also use <a href="http://onjava.com/pub/a/onjava/2003/11/05/jsp.html">JSP 2.0-style</a> template syntax for including values in strings:      
+      <pre class="prettyprint">
+  var world = "World"
+  print( "Hello ${world}" )
+      </pre>
+      <h3>String Conversions</h3>
+      <p>Strings have a bunch of methods that can be used to convert them to other data types.  Here are some examples:
+      <pre class="prettyprint">
+  var bool = "true".toBoolean()
+  var i = "42".toInt()
+  var d = "1/1/2001".toDate()
+      </pre>
+      These methods are added to <code>java.lang.String</code> via Enhancements, which we will talk about next.  Usually they just chain through to some standard Java API that has been helpfully hidden in some obscure location.</p>
+      <h3>Other String Enhancements</h3>
+      <p>In addition to the <code>.to*</code> methods for conversions, a bunch of useful methods have been added to Strings via Enhancements.  Here is a sampling:</p>
+      <ul>
+        <li><code>findDistinctIndicesOf()</code> - Returns a List of Integers where the given string appears</li>
+        <li><code>chomp()</code> - Removes one newline character from the end of the string, if it exists.</li>
+        <li><code>chop()</code> - Remove the last character of a String.</li>
+        <li><code>repeat()</code> - Repeats the strings n times.</li>
+        <li><code>rightPad()</code>, <code>leftPad()</code>, <code>center()</code> -  Format the string with whitespace to the width specified</li>
+        <li><code>elide()</code> - cap the length of the string at a given size, using '...' to indicate that the string overflowed</li>
+        <li><code>getDistanceFrom()</code> - Return the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a> between this string and another string.</li>
+      </ul>
+      <h3>String Templates</h3>
+      <p>
+        Gosu supports templates as first class entities in the language.  A gosu template is a file that ends in the <code>.gst</code> extension.  Here is a sample template definition:
+      <pre class="prettyprint">
+&lt;% params( names : String[] ) %>
+All Names: &lt;% for( name in names ) { %>
+  * ${name} 
+&lt;% } %>
+      </pre>
+      If this template code was located in <code>sample.Sample.gst</code>, then it could be invoked like so:
+      <pre class="prettyprint">
+  var str = sample.Sample.renderToString( {"Joe", "John", "Josh"} )
+      </pre>
+      Note that the <code>renderToString()</code> method is statically typed.  Templates, like all good citizens, expose a nice, safe statically typed API.
+      </p>
+      
+      <h2>File I/O</h2>
+      <p>
+      Here is how you read a File:
+      <pre class="prettyprint">
+  var f = new File( "/tmp/temp.txt")
+  var content = f.read()
+      </pre>
+      and here is how you write a File:
+      <pre class="prettyprint">
+  var f = new File( "/tmp/temp.txt")
+  var content = f.write( "It's so crazy, it just might work..." )
+      </pre>
+      and here is how you read a file a line at a time:
+      <pre class="prettyprint">
+  var f = new File( "/tmp/temp.txt")
+  var content = f.eachLine( \ s -> print( s ) )
+      </pre>
+      That funny backslash/arrow thing is a block (or a closure, or a lambda expression.)  I'll explain those in the next section, on data structures.
+      </p>
+      <p>Files have some other useful tricks added to them as well.  Play around with them to see.</p>
+      
+      <h2>Interacting With The OS</h2>
+      <p>Java doesn't want you to interact with the OS, except via standard Java APIs.  Gosu recognizes that, while standard APIs are great, there are times when push comes to shove, and a man must compromise principle in the name of expediency.  In those times <code>gw.util.Shell</code> is there for you:
+      <pre class="prettyprint">
+  uses gw.util.Shell
+  
+  listingOfDir = Shell.exec( "ls" )
+      </pre>
+      There are other more elaborate ways to interact with the OS via <code>Shell</code>, but <code>exec()</code> is good enough in many cases, especially when you are writing glue scripts.
+      </p>
+    </div>
+  </body>
+</html>

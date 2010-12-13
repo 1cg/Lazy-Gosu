@@ -1,0 +1,278 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Intro</h1>
+      <p>I don't have time to write a book.</p>
+      <p>You probably don't have time to read a book.</p>
+      <p>So, how about a quick introduction to Gosu and how to get productive in it, instead?</p>
+      <p>Gosu is an imperative, statically typed programming language for the JVM.  It is designed to be a easy for Java developers to pick up.  If falls between Groovy, which is an imperative, dynamically typed language (with optional type annotations) and Scala, which is a functional-ish, statically typed language.</p>
+      <p>It's nothing like Clojure, which is a Lisp variant and, therefore, insane.</p>
+      <h2>Why?</h2>
+      <p>Why learn Gosu, given all the alternatives out there?  Here are three reasons:
+        <ul>
+          <li>Gosu is an easier transition from Java than other languages.  The focus in Gosu is on making things simpler, rather than more complicated, and on extending existing Java functionality, rather than on inventing new concepts or libraries.</li>
+          <li>Since Gosu retains static typing, it is possible to provide decent modern IDE support.  Having an accurate list of methods pop up after I hit '.' makes me a bit more than infinitely more productive.</li>
+          <li>Gosu has a technology called the Open Type System.  This allows Gosu to integrate non-Gosu resources directly into the language, which makes for some buttery framework support.  As an example, there is an XSD Type Loader that will inspect XSD files on the classpath and generate types for the Gosu compiler to work with, removing the need for an ugly code generation step.  Just drop an XSD in your source tree and, blam, go.  <br/><br/>Sweet.</li>
+        </ul>
+      </p>
+
+      <h2>Installing</h2>
+      <p>
+        <ul>
+          <li>Install Java (any version 1.5 or greater)</li>
+          <li>Download Gosu from <a href="">http://gosu-lang.org</a></li>
+          <li>Unzip it</li>
+          <li>If you are on *nix, make <code>bin/gosu.sh</code> executable</li>
+        </ul>
+        You can now run Gosu using the scripts in the <code>bin</code> directory.
+      </p>
+
+      <h2>Programs</h2>
+      <p>
+        Gosu doesn't have the concept of a <code>public static void main(String[] args)</code> method, because that is crazy.  Instead, it just has programs, kind of like Ruby or Python, which are bits of Gosu code in a file ending in the <code>.gsp</code> extension.</p>
+        <p>Here is <code>hello_word.gsp</code>:
+        <pre class="prettyprint">
+  print( "Hello World!")
+        </pre>
+        Not very elaborate, is it?
+      </p>
+      <p>
+        You run this complicated program like so:
+        <pre>
+  Thumper carson$ gosu hello_world.gsp
+  Hello World
+  Thumper carson$
+        </pre>
+      </p>
+      <p>If you are wondering how to get to command line arguments passed to your Gosu program, you can use <code>gw.lang.cli.CommandLineAccess</code> to get at them.</p>
+
+      <h2>Math</h2>
+      <p>Gosu supports the usual math operators, and they work on the major numeric types, such as <code>BigDecimal</code> and <code>BigInteger</code></p>
+
+      <h2>Comparisons</h2>
+      <p>Gosu supports the usual comparison operators:
+      <ul>
+        <li><code>==</code> - Object equality</li>
+        <li><code>===</code> - Instance equality</li>
+        <li><code>>, &lt;, etc.</code> - Standard comparison semantics, works with <code>java.lang.Comparable</code></li>
+      </ul>
+
+      <h2>Logical Operators</h2>
+      <p>Gosu supports the usual logical operators, and you can use either the english style <code>not</code>, <code>and</code> and <code>or</code>, or the C-style equivalents.  I use the english style and you should too, because they make you sound smart.</p>
+
+      <h2>Variables and Control Flow</h2>
+      <p>In Gosu, you typically do not need to declare the type of variables:
+      <pre class="prettyprint">
+  var x = 10
+  print( x + x ) // prints 20
+      </pre>
+      Gosu will infer the type of x to be <code>int</code>.
+      </p>
+      <p>
+      If you want to explicitly type the variable, you put the type annotation after the variable name:
+          <pre class="prettyprint">
+  var x : int = 10
+  print( x + x ) // prints 20
+          </pre>
+      </p>
+
+      <h3>If</h3>
+      <p>The <code>if</code> statement is just like every other sane language:
+        <pre class="prettyprint">
+  var x = 10
+  if( x > 5 ) {
+    print( "x was greater than 5")
+  }
+        </pre>
+      </p>
+
+      <h3>For</h3>
+      <p>The <code>for</code> statement is similar to other languages:
+        <pre class="prettyprint">
+  var aList = {"a", "b", "c"}
+  for( x in aList ) {
+    print( x )
+  }
+       </pre>
+       The <code>for</code> statement works with arrays and classes that implement <code>java.lang.Iterable</code>.  Note that <code>x</code> is explicitly typed to <code>java.lang.String</code> above, via type inference.
+      </p>
+      <p>Sometimes you want the index of an iteration.  You can use this syntax:
+        <pre class="prettyprint">
+  var aList = {"a", "b", "c"}
+  for( x in aList index i ) {
+    print( i + ":" + x )
+  }
+        </pre>
+        <code>i</code> will be the zero-based index of the current loop of the iteration.
+      </p>
+      <p>The <code>for</code> loop is null safe.  No incomprehensible NPEs when <code>aList</code> is <code>null</code>.
+      </p>
+
+      <h3>Etc.</h3>
+      <p>Gosu has <code>while</code>, <code>do/while</code> and <code>switch</code> statements, all of which work like you would expect.
+      </p>
+
+      <h2>Working With Types</h2>
+      <p>Gosu allows you to determine the runtime type of a value with the <code>typeof</code>:</p>
+      <pre class="prettyprint">
+  var x = "This is a String"
+  var t = typeof x
+  print( t.Name ) // prints java.lang.String
+      </pre>
+      It the code above, the type of <code>t</code> is <code>gw.lang.reflect.IType</code>, which is the Gosu Type System's equivalent of <code>java.lang.Class</code>
+      </p>
+      <p>Gosu has a way to test if an object is an instance of a type, like Java's <code>instanceof</code> keyword: <code>typeis</code>.  Here is an example:
+      <pre class="prettyprint">
+  var x : Object
+  x = "A String"
+  if( x typeis String ) {
+    print( "x is a String with length " + x.length )
+  }
+      </pre>
+      One interesting thing about the <code>typeis</code> operator is that how it interacts with logical operators and the <code>if</code> statement.  In the code above, note that <code>x</code> was <em>not</em> cast to <code>String</code>, but the <code>length</code> property on <code>String</code> was used in the <code>print</code> expression.  Gosu automatically downcast <code>x</code> to <code>String</code> after the <code>typeis</code> expression, and retained it for the body of the <code>if</code> statement.
+      </p>
+
+      <h2>Null Safety</h2>
+      <p>If you wish to make a null-safe call to a method or property, you can prefix the '.' operator with a question mark, '?':
+        <pre class="prettyprint">
+  var x : String = null
+  print( x?.length ) // prints "null"
+        </pre>
+      </p>
+
+      <h2>Classes</h2>
+      <p>Gosu classes are defined with much the same syntax as other programming languages.  You can define classes inside a Gosu program, or define them as top level classes in files ending in <code>.gs</code>.  Here's a basic class:
+        <pre class="prettyprint">
+uses java.util.List
+
+class SampleClass {
+  var _names : List&lt;String> // a private class variable, which is a list of Strings
+
+  // A public constructor
+  construct( names : List&lt;String> ) {
+    _names = names
+  }
+
+  // A public function
+  function printNames( prefix : String ) {
+    for( n in _names ) {
+      print( prefix + n )
+    }
+  }
+
+  // A public property getter, making this a read only property
+  property get Names() : List&lt;String> {
+    return _names
+  }
+}
+        </pre>
+        The above code demonstrates the following features:
+        <ul>
+          <li>The <code>uses</code> statement, which is identical to the <code>import</code> statement in Java, and makes a class (or package of classes) available for use without qualification.</li>
+          <li>A class variable, declared using the <code>var</code> keyword, just like local variables.  Class variables default to private access.  You can declare them to be <code>static</code> as well.</li>
+          <li>A class constructor, declared using the <code>construct</code> keyword.  This constructor allows you to declare new instances of<code>SampleClass</code> like so:<pre class="prettyprint">  var c = new SampleClass({"joe", "john", "jack"})</pre>Constructors default to public access.</li>
+          <li>A function, declared using the <code>function</code> keyword.  This function takes a <code>String</code> argument, and returns no value, so no return type declaration is necessary.  It can be invoked like so:<pre class="prettyprint">
+  var c = new SampleClass({"joe", "john", "jack"})
+  c.printNames("* ")</pre></li>
+          <li>A property getter, declared using the <code>property</code> and <code>get</code> keywords.  This property returns a list of strings.  It can be invoked like so:<pre class="prettyprint">
+  var c = new SampleClass({"joe", "john", "jack"})
+  print( c.Names )</pre></li>
+        </ul>
+        Properties might be a new concept for Java developers.  They are a formalization of the getter/setter convention in Java, and have some interesting and useful characteristics that will become apparent over time (e.g. they are both an <a href="http://en.wikipedia.org/wiki/Value_(computer_science)">rvalue and an lvalue.</a>)
+      </p>
+      <h3>Shorthand Property Syntax</h3>
+      <p>Exposing a field as a property is a common pattern, so there is a short hand for it:
+        <pre class="prettyprint">
+class SampleClass {
+  var _names : List&lt;String> as Names
+
+  // A public constructor
+  construct( names : List<String> ) {
+    _names = names
+  }
+
+  // A public function
+  function printNames( prefix : String ) {
+    for( n in _names ) {
+      print( prefix + n )
+    }
+  }
+}
+        </pre>
+        The '<code>as Names</code>' exposes the <code>_names</code> field as a property.  If you want the property to be read only, you can add the <code>readonly</code> modifier after the <code>as</code> keyword.
+      </p>
+      <h3>Named Arguments and Default Parameter Values</h3>
+      <p>Gosu supports names arguments and default parameter values to help smooth out APIs.  Let's say you wanted to make the argument to <code>printNames()</code> optional, with a default value of <code>"> "</code>.  You could change the declaration to:<pre class="prettyprint">
+  // A public function
+  function printNames( prefix : String = "> ") {
+    for( n in _names ) {
+      print( prefix + n )
+    }
+  }
+        </pre>
+        And now invoke it like so:
+        <pre class="prettyprint">
+  var c = new SampleClass({"joe", "john", "jack"})
+  c.printNames() //No argument is necessary, it will use the default</pre>
+      Additionally, Gosu allows you to use named arguments when you are working with non-overloaded methods on Gosu classes:
+      <pre class="prettyprint">
+  var c = new SampleClass({"joe", "john", "jack"})
+  c.printNames(:prefix = "* ")</pre>
+      This can be used to clarify code, so you don't end up with stuff like this:
+      <pre class="prettyprint">  someMethod(true, false, null, false, true)  //bwah?</pre>    
+      </p>
+      <h3>Superclasses, Interfaces and Delegates</h3>
+      <p>Gosu classes can extend other classes and implement interfaces, just like in Java classes, using the <code>extends</code> and <code>implements</code> keywords respectively.
+      </p>
+      <p>
+        One interesting feature of Gosu is the ability to delegate the implementation of an interface to a class variable:
+      <pre class="prettyprint">
+uses java.lang.Runnable
+
+class MyRunnable implements Runnable {
+  //A delegate, exposed as the Impl property
+  delegate _runnable represents Runnable as Impl
+}
+      </pre>
+        Note that the class <code>MyRunnable</code> does not declare a <code>run()</code> method, like <code>Runnable</code> requires.  That's because the delegate <code>_runnable</code> is doing the work for it.  Here's an example of this class in action:
+      <pre class="prettyprint">
+  var x = new MyRunnable()
+  x.Impl = new Runnable() {
+    function run() {
+      print("Hello, Delegation")
+    }
+  }
+  x.run() // prints "Hello, Delegation"
+      </pre>
+      Delegates give you a convenient way to favor <a href="http://www.artima.com/lejava/articles/designprinciples4.html">composition over inheritance</a>.
+      </p>
+    </div>
+  </body>
+</html>

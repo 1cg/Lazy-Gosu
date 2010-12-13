@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Web</h1>
+      <p>The quickest way to get a web app up in Gosu is to use Ronin:<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://code.google.com/p/ronin/">http://code.google.com/p/ronin/</a><br/><br/>
+        Once you've downloaded it, you can create a new Ronin application like so:
+      <pre>
+  Thumper carson$ ./ronin/roninit init ~/Desktop/sample_app
+    Creating /Users/carson/Desktop/sample_app/build.vark
+    Creating /Users/carson/Desktop/sample_app/db/init.sql
+    ...
+    Creating /Users/carson/Desktop/sample_app/support/vark/RoninVarkTargets.gsx
+
+  A ronin application was created at /Users/carson/Desktop/sample_app.  To start the application:
+
+    cd /Users/carson/Desktop/sample_app 
+    vark server
+      </pre>
+      </p>
+      <p>
+      Ronin uses <a href="build.html">Aardvark</a> to manage the ronin application, so you should install that as well.  Once you have that installed, you can follow Ronin's instructions and start up the development server:
+      <pre>
+  Thumper: carson$ cd ~/Desktop/sample_app/
+  Thumper: carson$ vark server
+  Buildfile: /Users/carson/Desktop/sample_app/build.vark
+  [11:57:06] Done parsing Aardvark buildfile in 752 ms
+
+  server:
+
+  Starting server in socket debug mode at 8088
+       [java] The args attribute is deprecated. Please use nested arg elements.
+       [java] The jvmargs attribute is deprecated. Please use nested jvmarg elements.
+       [java] Listening for transport dt_socket at address: 8088
+       [java] 2010-12-12 11:57:10.159:INFO::Logging to STDERR via org.mortbay.log.StdErrLog
+       [java] 2010-12-12 11:57:10.236:INFO::jetty-6.1.26
+       [java] 2010-12-12 11:57:10.422:INFO::NO JSP Support for /, did not find org.apache.jasper.servlet.JspServlet
+       [java] 2010-12-12 11:57:10.807:INFO::Started SocketConnector@0.0.0.0:8080
+       [java] H2 DB started at jdbc:h2:file:/Users/carson/Desktop/sample_app/./runtime/h2/devdb STATUS:TCP server running on tcp://10.0.1.3:9092 (only local connections)
+       [java] Creating DB from /Users/carson/Desktop/sample_app/./db/init.sql
+       [java] Done
+       [java] H2 web console started at http://10.0.1.3:8082 STATUS:Web server running on http://10.0.1.3:8082 (only local connections)
+       [java] Use org.h2.tools.Server@59050a0 as your url, and a blank username/password to connect.
+       [java] 
+       [java] 
+       [java] Your Ronin App is listening at http://localhost:8080
+       [java] 
+       [java]        
+      </pre>
+      You can connect to the (currently uninteresting) app at <code>http://localhost:8080</code>.
+      </p>
+      <p>
+      Out of the box Ronin uses a Jetty/H2 web server/database combination.
+      
+      <h2>Developing in Ronin</h2>
+      <p>For a complete tutorial on how to use ronin, you should check out the main <a href="http://code.google.com/p/ronin/">website</a>.</p>
+      <p>To give you an idea of the flavor, though, here's a quick introduction:</p>
+      <p>Ronin maps URLs down to static methods on Gosu classes located in the special (to Ronin) <code>controller</code> package.  So a request like this:
+        <pre>
+  http://localhost:8080/Foo/bar
+        </pre>
+        will get mapped to the <code>bar()</code> method on the class <code>controller.Foo</code>.  There are conventions for passing arguments to these URLs that I won't go in to, but they aren't crazy.</p>
+        <h3>Creating A Controller and View</h3>
+        <p>
+        Let's create a simple controller that answers to the URL above.  Inside the <code>src/controller</code> directory in your Ronin project, create the a <code>Foo.gs</code> file with the following content:
+        <pre>
+  package controller
+
+  uses ronin.*
+
+  class Foo extends RoninController {
+    static function bar() {
+      view.BarTemplate.render(writer, "Hello Ronin!")
+    }
+  }
+        </pre>
+        This is just a plain old Gosu class, calling through to a plain old Gosu template, located in the <code>view</code> package.  Let's make that template:
+        </p>
+        <p>
+        In the <code>src/view</code> directory, create a file named <code>BarTemplate</code> with the following content:
+        <pre>
+  <%@ params( message : String ) %>
+  &lt;html>
+    &lt;body>
+      ${message}
+    &lt;/body>
+  &lt;/html>
+        </pre>
+        Again, this is just a plain old Gosu template, as is available in every other Gosu program.  Note that the template takes a parameter, and that the <code>render()</code> method is strongly typed, taking the writer to write the template to, as well as the <code>message</code> parameter.
+        </p>
+        <p>
+        Now when you navigate to <code>http://localhost:8080/Foo/bar</code>, the controller you created will be invoked and output the template.
+        </p>
+        <p>
+        Ronin offers a way to work with a database as well, and is making rapid progress.  Please check the project out and contribute!
+        </p>
+    </div>
+  </body>
+</html>

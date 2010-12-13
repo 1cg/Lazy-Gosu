@@ -1,0 +1,77 @@
+body {
+	font-family : verdana;
+}
+
+code {
+	font-size :12pt;
+}
+
+li {
+	padding: 4px;
+}
+
+.title {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+	color : #FAF200;
+	background-color : #8C8B8B;
+	font-size : 60px;
+	font-family : Courier;
+	font-weight : bold;
+	padding : 16px;
+	padding-left : 32px;
+}
+
+.tagline {
+	padding-left : 168px;
+	font-size : 16px;
+	font-weight : normal;	
+	font-style : italic;
+}
+
+.links {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+	font-size : 20px;
+	background-color : #3B3B3B;
+	color : white;
+	padding : 8px;
+}
+
+.links a:link {
+	text-decoration: none;
+	color : white;
+	padding : 8px;
+}
+
+.links a:visited {
+	text-decoration: none;
+	color : white;
+	padding : 8px;
+}
+
+.links a:active {
+	text-decoration: none;
+	color : white;
+	padding : 8px;
+}
+
+.links a:hover {
+	text-decoration: underline;
+	color : white;
+	padding : 8px;
+}
+
+.content {
+	margin : 16px;
+}
+
+.q_and_a {
+	margin : 8px;
+	padding : 4px;
+	border : none;
+}
+
+.q_and_a td {
+	font-style : italic;
+}

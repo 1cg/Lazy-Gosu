@@ -1,0 +1,44 @@
+Lazy Gosu
+
+Intro
+  * Programs
+  * Vars, Control Flow
+  * Casting/Typeis inference
+  * Null safe operation
+  * Classes
+    * Vars
+    * Delegates
+    * Functions
+    * Properties
+
+* Strings/IO
+  * Easy Peasy
+  * Templates
+
+* Enhancements
+
+* Data
+  * Closures
+  
+* XML
+  * XSD Type Loader
+  * WSDL Type Loader
+
+* Build
+  * 
+
+* Web
+  * Ronin
+    
+* Generics
+  *
+  
+* Misc
+  * eval()
+
+* API
+  * Compiler
+
+* Open Type System
+  * Philosophy
+  * Example (Protocols)

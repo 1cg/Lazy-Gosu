@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Enhancements</h1>
+      <p>Enhancements provide a way to add methods and properties to existing classes.  They are similar to <a href="http://msdn.microsoft.com/en-us/library/bb383977.aspx">Extension Methods</a> in C#, but do not need to be explicitly imported.</p>
+
+      <h2>Syntax</h2>
+      <p>Enhancements must be defined in files ending in the <code>.gsx</code> suffix.  They cannot be defined inline within other gosu resources presently.</p>
+      <p>Here is an example enhancement, that adds a method to <code>java.lang.String</code>:
+      <pre class="prettyprint">
+  package example
+  
+  enhancement MyStringEnhancement : String {
+    function print() {
+      print( this )
+    }
+  }
+      </pre>
+      In enhancements, the <code>this</code> symbol refers to the <em>enhanced</em> type, rather than the enhancement.
+      </p>
+      <p>Given the enhancement above, you can invoke the <code>printMe()</code> method on Strings like this:
+      <pre class="prettyprint">
+  "Hello World".print()
+      </pre>
+      
+      <h2>Semantics And Limitations</h2>
+      The above code can be thought of as shorthand for this code:
+      <pre class="prettyprint">
+  example.MyStringEnhancement.print( "Hello World" )
+      </pre>
+      Enhancements are <em>statically</em> dispatched.  This means they cannot be used to implement interfaces or to achieve polymorphism (unless you use a filthy, awful hack.)
+      </p>
+      <p>We often refer to using enhancements as "donkey patching" a class.  They are kind of like a <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patch</a>, but a bit more formalized.  A class is missing a method?  Donkey patch it, man.</p>
+
+      <h2>Generics</h2>
+      Enhancements can be generic, so you can add an enhancement to <code>List&lt;T></code>:
+      <pre class="prettyprint">
+  package example
+  
+  uses java.util.List
+  
+  enhancement MyListEnhancement&lt;T> : List&lt;T> {
+    function firstAndLast() : List&lt;T> {
+      return {this.first(), this.last()}
+    }
+  }
+      </pre>
+      This method will now be available on all generic lists, and will be properly typed.
+      <h3>Type Variable Reification</h3>
+      Type variables can be used in expressions in Gosu.  In Enhancements, the type variables are statically, rather than dynamically, reified, much like methods are statically, rather than dynamically dispatched.  The enhancement method <code>toTypedArray():T[]</code> on <code>Iterable&lt;T></code> demonstrates this:
+      <pre class="prettyprint">
+  var lstOfStrings : List&lt;String> = {"a", "b", "c"}
+  var arrOfStrings = lstOfStrings.toTypedArray() //returns a String[]
+  
+  var lstOfObjs : List&lt;Object> = lstOfStrings //type variables are covariant in Gosu, see <a href="generics.html">generics</a>        
+  var arrOfObjs = lstOfStrings.toTypedArray() //returns an Object[]
+      </pre>
+      
+      <h3>Enhancing Parameterized Types</h3>
+      <p>You can enhance parameterized types, which is a neat trick:</p>
+      <pre class="prettyprint">
+  package example
+  
+  uses java.util.*
+  
+  enhancement MyListOfDatesEnhancement : List&lt;Date> {
+    function allBetween( start : Date, end : Date ) : List&lt;Date>{
+      var lst = new ArrayList&lt;Date>()
+      for( d in this ) {
+        if( start &lt;= d and d &lt;= end ) {
+          lst.add( d )          
+        }
+      }
+      return lst 
+      // NOTE: you would normally write this using blocks:
+      //  return this.where( \ d -> start &lt;= d and d &lt;= end )
+    }
+  }
+      </pre>
+    </div>    
+  </body>
+</html>
