@@ -29,12 +29,51 @@
 
     <div class="content">
       <h1>API</h1>
-      <p>First, a bit of philosophy:</p>
-      <p>Java has most of the functionality a developer would want.  Sometimes the API for that functionality is insane.  For example, writing a file.  In these cases, Gosu will typically offer a simpler alternative, often built in to the obvious Java class, via enhancements.  Other times the API is fine and Gosu won't offer anything beyond that.</p>
-      <p>Gosu is not an attempt to reinvent the world.  The core Java libraries are very solid and, in some cases, just lack a bit of simplicity or a bit of functionality, often due to a lack of features in Java.</p>
-      <p>Because of that, the API that Gosu provides is relatively small and somewhat sporadic, addressing corners of the standard Java API that we were unhappy with.</p>
-      <p>That being said, here are some highlights from the <code>gw.api</code> packages:
       
+      <p>Gosu provides some additional library support beyond the standard Java libraries</p>
+      
+      <h1>Philosophy</h1>
+
+      <p>First, a bit of philosophy:</p>
+      
+      <p>Java has most of the functionality a developer would want.  Sometimes the APIs for this functionality is insane.  For example, writing a file is a 'look up on google' bit of code for me every time, even after all these years.  In these cases, Gosu will typically offer a simpler alternative, usually built in to the obvious Java class, via enhancements.  Other times the API is fine and Gosu won't offer anything beyond that.</p>
+      
+      <p>So Gosu is not an attempt to reinvent the world.  The core Java libraries are very solid and, in some cases, just lack a bit of simplicity or functionality, often due to a lack of language features in Java.</p>
+      <p>Thus, the API that Gosu provides is relatively small and somewhat sporadic, addressing corners of the standard Java API that we were unhappy with.  There is not a new collections framework, for example.  <code>ArrayList</code> and <code>HashMap</code> have served us well, and there is no reason to retire them.  Instead, we would just like to make Java developers more productive with the libraries they already know.</p>
+
+      <h1>Highlights</h1>
+
+      <p>All that being said, here are some highlights from the <code>gw.*</code> packages:
+      
+      <h3><code>gw.lang.cli.CommandLineAccess</code></h3>
+      <p>This class allows you to access the arguments passed in to your gosu program.  It can also be used to reflectively populate a Gosu class with the arguments that were passed in.  You can look at the other classes in <code>gw.lang.cli</code> to see how to set up class to accept command line arguments.</p>
+
+      <h3><code>gw.lang.reflect.TypeSystem</code></h3>
+      <p>This is class offers some static methods as entry points into the Gosu Type System, for example looking up types by name.</p>
+
+      <h3><code>gw.util.AutoMap</code></h3>
+      <p>This class wraps a map and will automatically create a value in the map for a key miss.  You can convert a regular map to an <code>AutoMap</code> easily:
+         <pre>
+           var map = { "foo" -> "bar", "doh" -> "rey" }                         // creates a regular HashMap&lt;String, String>
+           var autoMap = map.toAutomap( \ s -> 'There is no value for "${s}"' ) // convert it to an AutoMap
+           print( autoMap["blah"] )                                             // prints "There is no value for "blah"
+         </pre></p>
+
+      <h3><code>gw.util.concurrent.LazyVar</code></h3>
+      <p>This class gives you a thread-safe way to implement a lazy variable by passing in a simple initialization block:
+         <pre>
+  var lazyValue = LazyVar.create( \-> expensiveFunction() )
+  ...
+  var actualValue = lazyValue.get()
+         </pre>
+         This can be used to make startup of your gosu system faster.  Our experience suggests it should be used judiciously.</p>
+
+      <h3><code>gw.util.Gosu*Util</code></h3>
+      <p>These classes provide functionality around some common areas (e.g. Arrays, Exceptions, Escaping Strings.)  Typically, in Gosu, the functionality on these classes is exposed via Enhancements, but they can still be useful in any Java code you are forced to write.</p>
+
+      <h3><code>gw.util.Shell</code></h3>
+      <p>This class tries to make working with the host OS relatively painless, allowing you to execute command line scripts, etc. without a lot of work</p>
+         
     </div>
   </body>
 </html>
