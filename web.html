@@ -104,7 +104,7 @@
         This is just a plain old Gosu class, calling through to a plain old Gosu template, located in the <code>view</code> package.  Let's make that template:
         </p>
         <p>
-        In the <code>src/view</code> directory, create a file named <code>BarTemplate</code> with the following content:
+        In the <code>src/view</code> directory, create a file named <code>BarTemplate.gst</code> with the following content:
         <pre>
   <%@ params( message : String ) %>
   &lt;html>
@@ -113,7 +113,7 @@
     &lt;/body>
   &lt;/html>
         </pre>
-        Again, this is just a plain old Gosu template, as is available in every other Gosu program.  Note that the template takes a parameter, and that the <code>render()</code> method is strongly typed, taking the writer to write the template to, as well as the <code>message</code> parameter.
+        This is just a plain old Gosu template, as is available in every other Gosu program.  Note that the template takes a parameter, and that the <code>render()</code> method is strongly typed, taking the Writer to write the template to (in this case, the <code>writer</code> property inherited from <code>RoninController</code>, which is tied back to the HTTP request) as well as the <code>message</code> parameter.
         </p>
         <p>
         Now when you navigate to <code>http://localhost:8080/Foo/bar</code>, the controller you created will be invoked and output the template.

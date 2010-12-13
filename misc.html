@@ -42,6 +42,32 @@
       This will construct the <code>MyClass</code> object and then set the <code>Prop1</code> and <code>Prop2</code> properties.
 
       <h2>Named Arguments</h2>
+      <p>Gosu supports named arguments if two conditions are met:
+        <ul>
+          <li>When the method (or constructor) comes from a source that provides good naming information.  (Java classes, for example, do not.)</li>
+          <li>The method (or constructor) is <b>not</b> overloaded</li>
+        </ul>
+        If these two conditions are met, you can use named arguments.  Let's look at an example:
+        <pre>
+  function printIt( msg:String, escapeIt:boolean, printDate:boolean) {
+    if( escapeIt ) {
+      msg = msg.replace( "<", "&amp;lt;" )
+    }
+    if( printDate ) {
+      msg = (new Date()) + " " + msg
+    }
+    print( msg )
+  }
+  
+  printIt( "&lt;b>Hello World&lt/b>", true, true ) // what does that mean?
+
+  printIt( :msg = "&lt;b>Hello World&lt/b>", 
+           :escapeIt = true, 
+           :printDate = true )                // Oh.
+        </pre>
+      When methods take lots of arguments, or lots of non-descript arguments like booleans, named arguments can help clarify your code dramatically.
+      </p>
+      <p>Named arguments can also be combined with default parameters, discussed next, for some killer API support</p>
       
       <h2>Default Parameters</h2>
 
