@@ -144,9 +144,16 @@
       This is probably most useful with property chains.
       </p>
       <h2>Annotations</h2>
-      <p>Gosu supports Java annotations.</p>
-      <p>Gosu also supports its own, less insane version of annotations:  implement <code>gw.lang.IAnnotation</code> and you are an annotation.</p>
-
+      <p>Gosu supports usage of Java annotations:
+        <pre>
+  @java.lang.Deprecated
+  function oldCrustyMethod() : String {
+    return "bah"
+  }
+        </pre></p>
+        <p>Gosu also supports its own, less insane version of annotation declarations:  implement <code>gw.lang.IAnnotation</code> and you are an annotation.</p>
+        <p>Annotations declared like this can be used the same way as Java-style annotations.</p>
+      
       <h2>Call Site Validators</h2>
       <p>If you have an Gosu-style annotation that implements <code>gw.lang.reflect.IMethodCallValidator</code>, you can put that annotation on a feature and the annotation will be invoked <em>at compile time</em>.  This allows you to plug in to the compiler and give additional feedback or put additional constraints on how a method is used.</p>
       <p>For example, you might want to insist that your method only takes literals.</p>
