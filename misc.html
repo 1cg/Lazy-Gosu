@@ -33,7 +33,7 @@
       
       <h2>Object Initializers</h2>
       <p>You can set properties of an object in its constructor by using the object initializer syntax:
-      <pre>
+      <pre class="prettyprint">
   var newObj = new MyClass() {
     :Prop1 = "Foo",
     :Prop2 = "Bar"
@@ -48,10 +48,10 @@
           <li>The method (or constructor) is <b>not</b> overloaded</li>
         </ul>
         If these two conditions are met, you can use named arguments.  Let's look at an example:
-        <pre>
+        <pre class="prettyprint">
   function printIt( msg:String, escapeIt:boolean, printDate:boolean) {
     if( escapeIt ) {
-      msg = msg.replace( "<", "&amp;lt;" )
+      msg = msg.replace( "&lt;", "&amp;lt;" )
     }
     if( printDate ) {
       msg = (new Date()) + " " + msg
@@ -59,9 +59,9 @@
     print( msg )
   }
   
-  printIt( "&lt;b>Hello World&lt/b>", true, true ) // what does that mean?
+  printIt( "&lt;b>Hello World&lt;/b>", true, true ) // what does that mean?
 
-  printIt( :msg = "&lt;b>Hello World&lt/b>", 
+  printIt( :msg = "&lt;b>Hello World&lt;/b>", 
            :escapeIt = true, 
            :printDate = true )                // Oh.
         </pre>
@@ -70,15 +70,73 @@
       <p>Named arguments can also be combined with default parameters, discussed next, for some killer API support</p>
       
       <h2>Default Parameters</h2>
+      <p>Gosu supports default parameter values.  The <code>printIt</code> method could be rewritten like so:
+      <pre class="prettyprint">
+  function printIt( msg:String, escapeIt:boolean = true, printDate:boolean = true) {
+    if( escapeIt ) {
+      msg = msg.replace( "&lt;", "&amp;lt;" )
+    }
+    if( printDate ) {
+      msg = (new Date()) + " " + msg
+    }
+    print( msg )
+  }
 
+  printIt( "&lt;b>Hello World&lt;/b>" ) // I'm happy with the defaults...
+        </pre>
+      API designers take note: no need for telescoping methods in Gosu!
+      </p>
+      
       <h2>Feature Literals</h2>
-
+      <p>
+      Sometimes you want to refer to a method on a Class.  Gosu lets you do that like this:
+      <pre class="prettyprint">
+        var mr = String#substring(int)
+      </pre>
+      You can then invoke the Method Reference like so:
+      <pre class="prettyprint">
+        print( mr.invoke( "A String", 2 ) ) // the same as "A String".substring( 2 )
+      </pre>
+      You can also bind a Method Reference to an instance:
+      <pre class="prettyprint">
+        var mr = "A String"#substring(int)
+        print( mr.invoke( 2 ) ) // same as above
+      </pre>
+      As well as to parameters:
+      You can also bind a Method Reference to an instance:
+      <pre class="prettyprint">
+        var mr = "A String"#substring(2)
+        print( mr.invoke() ) // same as above
+      </pre>
+      Given a Method Reference, you can convert it to a block like so:
+      <pre class="prettyprint">
+        var blk = mr.toBlock()
+      </pre>
+      And you can get to the MethodInfo (The Gosu Type System equivalent of <code>java.lang.reflect.Method</code>) like so:
+      <pre class="prettyprint">
+        var blk = mr.MethodInfo
+      </pre>
+      </p>
+      <p>There are equivalent references for Properties and Constructors</p>
+      <p>Finally, you can refer to feature chains:
+      <pre class="prettyprint">
+        var methodChain = String#substring(int)#toUpperCase()
+      </pre>
+      This is probably most useful with property chains.
+      </p>
       <h2>Annotations</h2>
+      <p>Gosu supports Java annotations.</p>
+      <p>Gosu also supports its own, less insane version of annotations:  implement <code>gw.lang.IAnnotation</code> and you are an annotation.</p>
 
       <h2>Call Site Validators</h2>
+      <p>If you have an Gosu-style annotation that implements <code>gw.lang.reflect.IMethodCallValidator</code>, you can put that annotation on a feature and the annotation will be invoked <em>at compile time</em>.  This allows you to plug in to the compiler and give additional feedback or put additional constraints on how a method is used.</p>
+      <p>For example, you might want to insist that your method only takes literals.</p>
+      <p>This API is very much in flux, but also very much awesome.</p>
 
       <h2>Interface + Enhancement = Mixin</h2>
-
+      <p>This is a "feature" noticed by Alan Keefer: if you create an Interface and then create an Enhancement on that interface, you've effectively created a Mixin: anyone who implements that interface gets all the enhancement functionality mixed in.</p>
+      <p>Nice.</p>
+      
     </div>
   </body>
 </html>

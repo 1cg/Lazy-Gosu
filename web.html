@@ -90,7 +90,7 @@
         <h3>Creating A Controller and View</h3>
         <p>
         Let's create a simple controller that answers to the URL above.  Inside the <code>src/controller</code> directory in your Ronin project, create the a <code>Foo.gs</code> file with the following content:
-        <pre>
+        <pre class="prettyprint">
   package controller
 
   uses ronin.*
@@ -105,8 +105,8 @@
         </p>
         <p>
         In the <code>src/view</code> directory, create a file named <code>BarTemplate.gst</code> with the following content:
-        <pre>
-  <%@ params( message : String ) %>
+        <pre class="prettyprint">
+  &lt;%@ params( message : String ) %>
   &lt;html>
     &lt;body>
       ${message}

@@ -29,7 +29,7 @@
 
     <div class="content">
       <h1>XML</h1>
-      <p>XML is like English: unclear how or why it won out, but it's dug in like a tick at this point and there doesn't seem like a lot of upside to fighting it.  And, who knows, perhaps there is a deeper spiritual meaning behind all the suffering it causes.</p>
+      <p>XML is like English: unclear how or why it won out, but it's dug in like a tick now and there isn't a lot of upside to fighting it.  And, who knows, maybe there is deep, spiritual meaning behind all the suffering it causes.</p>
       <p>Gosu gives you a few ways to minimize the pain:</p>
       <h2>Untyped XML</h2>
       <p>If you just want to work with XML in an untyped, easy-peasy way, you can use <code>gw.xml.simple.SimpleXmlNode</code>:
@@ -47,12 +47,49 @@
       </pre>
       Pretty easy to deal with.
       </p>
-      
-      <h2>XSD</h2>
-      <p><b>TODO</b></p>
 
+      <h2 style="color:red">WARNING: UNRELEASED FEATURES</h2>
+      <p>The next two features are not in the current release of Gosu, but are scheduled to arrive "shortly":</p>
+      <h2>XSD</h2>
+      <p>If you have an XSD file, you can drop it in your source directory and start using it immediately, thanks to the <a href="ots.html">Open Type System</a></p>
+      <p>Let's say you have an XSD like this:
+      <pre class="prettyprint">
+  &lt;?xml version="1.0"?>
+  &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    &lt;xs:element name="Person">
+      &lt;xs:complexType>
+        &lt;xs:sequence>
+          &lt;xs:element name="firstname" type="xs:string"/>
+          &lt;xs:element name="lastname" type="xs:string"/>
+          &lt;xs:element name="age" type="xs:int"/>
+        &lt;/xs:sequence>
+      &lt;/xs:complexType>
+    &lt;/xs:element>
+  &lt;/xs:schema>
+      </pre>
+      And you drop it at <code>myapp/example.xsd</code>.  You can then start using the XSD-derived types like so:
+      <pre class="prettyprint">
+  var x = new myapp.example.Person()
+  x.Age = 32
+  x.Firstname = "Joe"
+  x.Lastname = "Blow"
+  x.print() // print out the
+      </pre>
+      No code gen, just drop in the XSD and go. Hell yes.</p>
+      <p>
+        I don't understand XSD at all, and even I can use <i>that</i>.
+      </p>
       <h2>WSDL</h2>
-      <p><b>TODO</b></p>
+      <p>Similarly, if you have a WSDL like the "simple" (<b>*barf*</b>) example defined <a href="http://ws.cdyne.com/WeatherWS/Weather.asmx?wsdl">here</a>, and you drop it at <code>myapp/weather.wsdl</code>, you can use the WSDL-derived types like so:
+      <pre class="prettyprint">
+  var x = new myapp.weather()
+  var forecast = x.GetCityForecastByZIP("95816")
+  print( forecast.ForecastResult.Forecast.map( \ f -> f.Desciption ).join("\n") )
+      </pre>
+      Again, no code gen.  Drop the WSDL in and go.
+      </p>
+      <p>Almost makes you not hate XML, doesn't it?</p>
+      <p>By the way, David Green, an engineer at Guidewire, is the guy who just made your life so much better.</p>
     </div>
   </body>
 </html>

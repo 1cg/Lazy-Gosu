@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <link rel=StyleSheet href="lazy.css" type="text/css">
+    <link href="prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+
+    <!-- HEADER -->
+    <div>
+      <div class="title">
+        The Lazy Gosuer<br/>
+        <span class="tagline">For Developers Who Give Up Easily</span>
+      </div>
+      <div class="links">
+        <a href="intro.html">Intro</a>
+        <a href="strings.html">Strings/IO</a>
+        <a href="enhancements.html">Enhancements</a>
+        <a href="data.html">Data</a>
+        <a href="xml.html">XML</a>
+        <a href="build.html">Build</a>
+        <a href="web.html">Web</a>
+        <a href="generics.html">Generics</a>
+        <a href="misc.html">Misc</a>
+        <a href="api.html">API</a>
+        <a href="ots.html">OTS</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>The Open Type System</h1>
+      <p>The corner stone of Gosu is the Open Type System.  This is the API that allows Gosu to use various kinds of resources in a statically typed, easily toolbable manner.  The beauty is that all you need to do is implement some java interfaces and, blam, you've got your custom type system.  (OK, it's a bit touchier than that, but still.)</p>
+      <p>As a concrete example, the OTS is what allows Gosu to work with WSDL types directly, without code generation.</p>
+      <p>There are really two sides to the OTS: clients of the type system and tool/framework implementors who want to expose their framework in a statically typed way.  Here are the main classes you will be using or implementing, respectively:</p>
+      
+    <h2><code>gw.lang.reflect.TypeSystem</code></h2>
+    <p>As a client, this is a good jumping-off spot to get at types:
+    <pre class="prettyprint">
+      var type = TypeSystem.getByFullName( aTypeName )
+    </pre>
+    It has many useful methods for exploring the type system (and a few hack that you can laugh about.)
+    </p>
+    
+    <h2><code>gw.lang.reflect.IType</code></h2>
+    <p>This is the core type abstraction in Gosu, the equivalent of <code>java.lang.reflect.Class</code>.
+      
+    <h2><code>gw.lang.reflect.ITypeInfo</code></h2>
+    <p>
+    This holds all the common information about types: constructors, methods, properties, etc.  You can get the type info for a type like so:
+    <pre class="prettyprint">
+      var ti = someType.TypeInfo
+    </pre>
+    To get all the methods on a type, you would do this:
+    <pre class="prettyprint">
+      var ti = String.Type.TypeInfo.Methods // String.Type is how you refer to the String type statically, like String.class in Java
+    </pre>
+    </p>
+
+    <h2><code>gw.lang.reflect.IMethodInfo</code></h2>
+    <p>
+    This represents an invokable method.  Let's use feature literals to get to one of these:
+    <pre class="prettyprint">
+      var methodInfo = Object#toString().MethodInfo // returns the method info for Object#toString()
+      print( methodInfo.ReturnType )                // prints java.lang.String
+    </pre>
+    </p>
+
+    <h2><code>gw.lang.reflect.IPropertyInfo</code></h2>
+    <p>
+      Just like an <code>IMethodInfo</code> but for properties.
+    </p>
+    
+    <h2><code>gw.lang.reflect.IConstructorInfo</code></h2>
+    <p>
+      And constructors.
+    </p>
+    
+    <h2><code>gw.lang.reflect.ITypeLoader</code></h2>
+    <p>
+      OK, if you are client then this isn't very interesting, but if you are an implementor, this is crucial.  This is what you implement to get into your type system.  In particular, the <code>gw.lang.reflect.ITypeLoader#getIntrinsicType</code> method, which takes a string type name and returns an IType, is where the magic begins.
+    </p>
+    <p>
+      If you are interested in creating a custom type system, you should take a look at the examples that come with gosu, or maybe take a look at one of my pet projects here:<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://protocols.github.com/">http://protocols.github.com/</a><br/><br/>
+    </p>
+    </div>
+  </body>
+</html>
