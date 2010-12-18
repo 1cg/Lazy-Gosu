@@ -45,18 +45,18 @@
       <p>
         Rather than writing code like this:
         <pre class="prettyprint">
-          var conn = getConnection()
-          try {
-            conn.execute( "Some advanced SQL" )
-          } finally {
-              conn.close() 
-          }
+  var conn = getConnection()
+  try {
+    conn.execute( "Some advanced SQL" )
+  } finally {
+      conn.close() 
+  }
         </pre>
         You can use the using statement:
         <pre class="prettyprint">
-          using( var conn = getConnection() {
-            conn.execute( "Some advanced SQL" )
-          }
+  using( var conn = getConnection() {
+    conn.execute( "Some advanced SQL" )
+  }
         </pre>
         The using statement will automatically clean up the resource for you.</p>
 
