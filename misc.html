@@ -41,6 +41,25 @@
       </pre>
       This will construct the <code>MyClass</code> object and then set the <code>Prop1</code> and <code>Prop2</code> properties.
 
+      <h2>Using Statement</h2>
+      <p>
+        Rather than writing code like this:
+        <pre class="prettyprint">
+          var conn = getConnection()
+          try {
+            conn.execute( "Some advanced SQL" )
+          } finally {
+              conn.close() 
+          }
+        </pre>
+        You can use the using statement:
+        <pre class="prettyprint">
+          using( var conn = getConnection() {
+            conn.execute( "Some advanced SQL" )
+          }
+        </pre>
+        The using statement will automatically clean up the resource for you.</p>
+
       <h2>Named Arguments</h2>
       <p>Gosu supports named arguments if two conditions are met:
         <ul>
