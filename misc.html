@@ -110,39 +110,40 @@
       <p>
       Sometimes you want to refer to a method on a Class.  Gosu lets you do that like this:
       <pre class="prettyprint">
-        var mr = String#substring(int)
+  var mr = String#substring(int)
       </pre>
       You can then invoke the Method Reference like so:
       <pre class="prettyprint">
-        print( mr.invoke( "A String", 2 ) ) // the same as "A String".substring( 2 )
+  print( mr.invoke( "A String", 2 ) ) // the same as "A String".substring( 2 )
       </pre>
       You can also bind a Method Reference to an instance:
       <pre class="prettyprint">
-        var mr = "A String"#substring(int)
-        print( mr.invoke( 2 ) ) // same as above
+  var mr = "A String"#substring(int)
+  print( mr.invoke( 2 ) ) // same as above
       </pre>
       As well as to parameters:
       You can also bind a Method Reference to an instance:
       <pre class="prettyprint">
-        var mr = "A String"#substring(2)
-        print( mr.invoke() ) // same as above
+  var mr = "A String"#substring(2)
+  print( mr.invoke() ) // same as above
       </pre>
       Given a Method Reference, you can convert it to a block like so:
       <pre class="prettyprint">
-        var blk = mr.toBlock()
+  var blk = mr.toBlock()
       </pre>
       And you can get to the MethodInfo (The Gosu Type System equivalent of <code>java.lang.reflect.Method</code>) like so:
       <pre class="prettyprint">
-        var blk = mr.MethodInfo
+  var blk = mr.MethodInfo
       </pre>
       </p>
       <p>There are equivalent references for Properties and Constructors</p>
       <p>Finally, you can refer to feature chains:
       <pre class="prettyprint">
-        var methodChain = String#substring(int)#toUpperCase()
+  var methodChain = String#substring(int)#toUpperCase()
       </pre>
       This is probably most useful with property chains.
       </p>
+
       <h2>Annotations</h2>
       <p>Gosu supports usage of Java annotations:
         <pre class="prettyprint">
