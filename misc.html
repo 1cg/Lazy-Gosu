@@ -3,6 +3,18 @@
     <link rel=StyleSheet href="lazy.css" type="text/css">
     <link href="prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="prettify.js"></script>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20364649-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   </head>
   <body onload="prettyPrint()">
 
@@ -142,6 +154,19 @@
   var methodChain = String#substring(int)#toUpperCase()
       </pre>
       This is probably most useful with property chains.
+      </p>
+
+      <h2>Range Operator</h2>
+      <p>Gosu supports a range operator:
+        <pre class="prettyprint">
+          var zeroToTenInclusive = 0..10
+          var zeroToTenExclusiveOfTen = 0..|10
+          var zeroToTenExclusiveOfZeroAndTen = 0|..|10
+          for( i in zeroToTenInclusive ) {
+            print( "i is ${i}" )
+          }
+        </pre>
+        The range operator works with numeric types and dates, as well as anything implementing <code>gw.lang.reflect.interval.ISequenceable</code>
       </p>
 
       <h2>Annotations</h2>
