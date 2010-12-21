@@ -13,8 +13,8 @@ li {
 .title {
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  -moz-border-top-left-radius: 16px;
-  -moz-border-top-right-radius: 16px;
+  -moz-border-radius-topleft: 16px;
+  -moz-border-radius-topright: 16px;
 	color : #FAF200;
 	background-color : #8C8B8B;
 	font-size : 60px;
@@ -34,8 +34,8 @@ li {
 .links {
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
-  -moz-border-bottom-left-radius: 16px;
-  -moz-border-bottom-right-radius: 16px;
+  -moz-border-radius-bottomleft: 16px;
+  -moz-border-radius-bottomright: 16px;
 	font-size : 20px;
 	background-color : #3B3B3B;
 	color : white;
