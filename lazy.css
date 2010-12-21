@@ -11,12 +11,14 @@ li {
 }
 
 .title {
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  -moz-border-top-left-radius: 16px;
+  -moz-border-top-right-radius: 16px;
 	color : #FAF200;
 	background-color : #8C8B8B;
 	font-size : 60px;
-	font-family : Courier;
+	font-family : Courier New;
 	font-weight : bold;
 	padding : 16px;
 	padding-left : 32px;
@@ -30,8 +32,10 @@ li {
 }
 
 .links {
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  -moz-border-bottom-left-radius: 16px;
+  -moz-border-bottom-right-radius: 16px;
 	font-size : 20px;
 	background-color : #3B3B3B;
 	color : white;
