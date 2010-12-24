@@ -153,7 +153,12 @@
       <pre class="prettyprint">
   var methodChain = String#substring(int)#toUpperCase()
       </pre>
-      This is probably most useful with property chains.
+      Feature chains are probably most useful when combined with properties, for things like UI-binding layers:
+      <pre class="prettyprint">
+  var binding = aContact#Address#ZipCode
+  var widget = new Widget(binding)
+      </pre>
+      This (hypothetical) UI framework would then use the binding to get and set the value of the <code>ZipCode</code> field associated with the instance <code>aContact.Address</code>.
       </p>
 
       <h2>Range Operator</h2>

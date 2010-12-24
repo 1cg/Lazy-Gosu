@@ -171,7 +171,37 @@
       </pre>
       One interesting thing about the <code>typeis</code> operator is that how it interacts with logical operators and the <code>if</code> statement.  In the code above, note that <code>x</code> was <em>not</em> cast to <code>String</code>, but the <code>length</code> property on <code>String</code> was used in the <code>print</code> expression.  Gosu automatically downcast <code>x</code> to <code>String</code> after the <code>typeis</code> expression, and retained it for the body of the <code>if</code> statement.
       </p>
-
+      
+      <h2>Properties</h2>
+      <p>Gosu supports formal properties, which are kind of like public fields in Java, but allow you to associate logic with the getting and setting of their values.  We will cover property definition below, but here is how you access them:
+        <pre class="prettyprint">
+  var p = new MyGosuPersonClass()
+  p.Name = "Joe"
+  print( "The name of this person is ${p.Name}")
+        </pre>
+          Properties have some interesting and useful characteristics that will become apparent over time (e.g. they are both an <a href="http://en.wikipedia.org/wiki/Value_(computer_science)">rvalue and an lvalue.</a>)</p>
+      <p>Gosu automatically converts get/set methods in Java classes into properties, so they can be used with all the convenience of Gosu class properties:
+        <pre class="prettyprint">
+  public class MyJavaPersonClass {
+    String _name;
+    
+    public String getName() {
+      return _name;
+    }
+    
+    public void setName( String s ) {
+      _name = s;
+    }
+  }
+        </pre>
+        Can be used like so:
+        <pre class="prettyprint">
+  var p = new MyJavaPersonClass()
+  p.Name = "Joe"
+  print( "The name of this person is ${p.Name}")
+        </pre>
+         </p>
+      
       <h2>Null Safety</h2>
       <p>If you wish to make a null-safe call to a method or property, you can prefix the '.' operator with a question mark, '?':
         <pre class="prettyprint">
@@ -218,7 +248,6 @@ class SampleClass {
   var c = new SampleClass({"joe", "john", "jack"})
   print( c.Names )</pre></li>
         </ul>
-        Properties might be a new concept for Java developers.  They are a formalization of the getter/setter convention in Java, and have some interesting and useful characteristics that will become apparent over time (e.g. they are both an <a href="http://en.wikipedia.org/wiki/Value_(computer_science)">rvalue and an lvalue.</a>)
       </p>
       <h3>Shorthand Property Syntax</h3>
       <p>Exposing a field as a property is a common pattern, so there is a short hand for it:
@@ -271,7 +300,15 @@ uses java.lang.Runnable
 
 class MyRunnable implements Runnable {
   //A delegate, exposed as the Impl property
-  delegate _runnable represents Runnable as Impl
+  delegate _runnable represents Runnable
+  
+  property get Impl : Runnable {
+    return _runnable
+  }
+  
+  property set Impl( r : Runnable ) {
+    _runnable = r
+  }
 }
       </pre>
         Note that the class <code>MyRunnable</code> does not declare a <code>run()</code> method, like <code>Runnable</code> requires.  That's because the delegate <code>_runnable</code> is doing the work for it.  Here's an example of this class in action:
