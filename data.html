@@ -41,15 +41,15 @@
 
     <div class="content">
       <h1>Data</h1>
-      <p>Data structures are probably the most important feature of a language when it comes to developer productivity.  Java has some great core implementations of data structures, like <code>java.util.ArrayList</code> and <code>java.util.HashTable</code>, but doesn't help you much when you want to manipulate them.</p>
-      <p>Gosu adds some functionality to the core data structures in Java, and provides some additional syntactic support for them as well.</p>
+      <p>Data structures are probably the most important feature of a language when it comes to developer productivity.  Java has some great core implementations of data structures, such as <code>java.util.ArrayList</code> and <code>java.util.HashTable</code>, but doesn't help you much when you want to manipulate them.</p>
+      <p>Gosu adds unctionality to the core data structures in Java, and provides additional syntactic support for them as well.</p>
 
       <h2>Lists</h2>
       <p>As you may have noticed, a list in Gosu can be declared by using <code>{}</code>'s:
       <pre class="prettyprint">
   var lstOfStrings = {"This", "is", "a", "list"}
       </pre>
-      You can also use Array-style access on lists:
+      You can use Array-style access on lists:
       <pre class="prettyprint">
   var lstOfStrings = {"This", "is", "a", "list"}
   print( lstOfStrings[2] ) // prints "a"
@@ -68,12 +68,20 @@
     return s.length > 2
   }
       </pre>
+      Or, if you prefer, this anonymous inner class:
+          <pre class="prettyprint">
+  var insanity = new com.google.common.base.Predicate&lt;String>() {
+    function apply( s : String ) : boolean {
+      return s.length > 2
+    }
+  }
+      </pre>      
       You can see why the block syntax is preferred.
       </p>
       <p>
-      Note that you don't have to declare the parameter type for <code>s</code>.  Gosu figures that out for you.
+      I didn't have to declare a type for <code>s</code> because it is defined in a context where Gosu can figure out the type for me.  This is typical.
       </p>
-      <p>By using blocks, you can often remove reams of iterative code you would end up writing in Java:
+      <p>with blocks you can often remove reams of iterative code you would end up writing in Java:
       <pre class="prettyprint">
   var lstOfStrings = {"This", "is", "a", "list"}
   var longStrings = lstOfStrings.where( \ s -> s.length > 2 )
@@ -81,6 +89,10 @@
                                 .orderBy( \ s -> s )            // there is a .order() method that could be used here instead
   print( longStrings.join(", ") ) // prints "LIST, THIS"
       </pre>
+      This code filters the strings, then converts them to upper case and finally sorts them.  Comparable code in Java is less clear, more coupled (with a mix of algorithmic steps in a for-loop, for example) and almost certainly more verbose.
+      </p>
+      <p>
+      Blocks have other uses, but, by and large, the big win with them is in Collection manipulation.
       </p>
 
       <h3>List Enhancements</h3>
