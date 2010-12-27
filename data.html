@@ -79,9 +79,9 @@
       You can see why the block syntax is preferred.
       </p>
       <p>
-      I didn't have to declare a type for the block's parameter <code>s</code> because it is defined in a context where Gosu can figure out the type for me.  This is typical.
+      I didn't have to declare a type for the block's parameter, <code>s</code>, because it is defined in a context where Gosu can figure out that it is a String.  Typically you will not have to define the types of the arguments of blocks.
       </p>
-      <p>with blocks you can often remove reams of iterative code you would end up writing in Java:
+      <p>With blocks you can often remove reams of iterative code you would end up writing in Java:
       <pre class="prettyprint">
   var lstOfStrings = {"This", "is", "a", "list"}
   var longStrings = lstOfStrings.where( \ s -> s.length > 2 )
@@ -94,6 +94,7 @@
       <p>
       Blocks have other uses, but, by and large, the big win with them is in Collection manipulation.
       </p>
+      <h4>Blocks and Interfaces</h4>
       <p>
       Blocks and one-method interfaces are automatically converted between one another:
       <pre class="prettyprint">
