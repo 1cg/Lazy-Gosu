@@ -67,7 +67,7 @@
       </pre>
       These methods are added to <code>java.lang.String</code> via Enhancements, which we will talk about next.  Usually they just chain through to some standard Java API that has been helpfully hidden in some obscure location.</p>
       <h3>Other String Enhancements</h3>
-      <p>In addition to the <code>.to*</code> methods for conversions, a bunch of useful methods have been added to Strings via Enhancements.  Here is a sampling:</p>
+      <p>In addition to the <code>.to*</code> methods for conversions, a bunch of other useful methods have been added to Strings.  Here is a sampling:</p>
       <ul>
         <li><code>findDistinctIndicesOf()</code> - Returns a List of Integers where the given string appears</li>
         <li><code>chomp()</code> - Removes one newline character from the end of the string, if it exists.</li>
@@ -90,7 +90,7 @@ All Names: &lt;% for( name in names ) { %>
       <pre class="prettyprint">
   var str = sample.Sample.renderToString( {"Joe", "John", "Josh"} )
       </pre>
-      Note that the static <code>renderToString()</code> method is statically typed, and takes exactly the parameters specified by the template, so everything is type checked,
+      Note that the static <code>renderToString()</code> method is statically typed, and takes exactly the parameters specified by the template, so everything is type checked.
       <p>There is also a static <code>render()</code> method that takes a writer, as well as the arguments to the template, for more efficient creation of large strings.
       </p>
       
