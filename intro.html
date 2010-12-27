@@ -51,8 +51,8 @@
       <p>Why learn Gosu, given all the alternatives out there?  Here are three reasons:
         <ul>
           <li>Gosu is an easier transition from Java than other languages.  The focus in Gosu is on making things simpler, rather than more complicated, and on extending existing Java functionality, rather than on inventing new concepts or libraries.</li>
-          <li>Since Gosu retains static typing, it is possible to provide decent modern IDE support.  Having an accurate list of methods pop up after I hit '.' makes me roughly infinitely more productive, give or take.</li>
-          <li>Gosu has a technology called the Open Type System.  This allows Gosu to integrate non-Gosu resources directly into the language, which makes for some buttery framework support.  As an example, there is an XSD Type Loader that will inspect XSD files on the classpath and generate types for the Gosu compiler to work with, removing the need for an ugly code generation step.  Just drop an XSD in your source tree and, blam, go.  <br/><br/>Sweet.</li>
+          <li>Since Gosu retains static typing, it is possible to provide good modern IDE support.  Having an accurate list of methods pop up a developer hits '.' is as important a productivity tool as any language feature.</li>
+          <li>Gosu has a technology called the Open Type System.  This allows Gosu to integrate non-Gosu resources directly into the language, which makes for some buttery framework support.  For example, there is an XSD Type Loader that will inspect XSD files on the classpath and generate types for the Gosu compiler to work with, removing the need for an ugly code generation step.  Just drop an XSD in your source tree and, blam, go.  <br/><br/>Sweet.</li>
         </ul>
       </p>
 
@@ -69,25 +69,25 @@
 
       <h2>Programs</h2>
       <p>
-        Gosu doesn't have the concept of a <code>public static void main(String[] args)</code> method, because that is crazy.  Instead, it just has programs, kind of like Ruby or Python, which are bits of Gosu code in a file ending in the <code>.gsp</code> extension.</p>
+        Gosu doesn't have the concept of a <code>public static void main(String[] args)</code> method, because that's just crazy.  Instead, it  has programs, like Ruby or Python, which are bits of Gosu code in a file ending in the <code>.gsp</code> extension.</p>
         <p>Here is <code>hello_word.gsp</code>:
         <pre class="prettyprint">
   print( "Hello World!")
         </pre>
-        Not very elaborate, is it?
+        Easy enough?
       </p>
       <p>
-        You run this complicated program like so:
+        You run this program like so:
         <pre>
   Thumper carson$ gosu hello_world.gsp
   Hello World!
   Thumper carson$
         </pre>
       </p>
-      <p>If you are wondering how to get to command line arguments passed to your Gosu program, you can use <code>gw.lang.cli.CommandLineAccess</code> to get at them.</p>
+      <p>You can use <code>gw.lang.cli.CommandLineAccess</code> to get at arguments passed to your Gosu program.</p>
 
       <h2>Math</h2>
-      <p>Gosu supports the usual math operators, and they work on the major numeric types, such as <code>BigDecimal</code> and <code>BigInteger</code></p>
+      <p>Gosu supports the usual math operators, and they work on the major primitive and non-primitive numeric types, such as <code>BigDecimal</code> and <code>BigInteger</code></p>
 
       <h2>Comparisons</h2>
       <p>Gosu supports the usual comparison operators:
@@ -98,7 +98,7 @@
       </ul>
 
       <h2>Logical Operators</h2>
-      <p>Gosu supports the usual logical operators, and you can use either the english style <code>not</code>, <code>and</code> and <code>or</code>, or the C-style equivalents.  I use the english style and you should too, because they make you sound smart.</p>
+      <p>Gosu supports the usual logical operators, and you can use either the english style <code>not</code>, <code>and</code> and <code>or</code>, or the C-style equivalents.  I use the english style operators.</p>
 
       <h2>Variables and Control Flow</h2>
       <p>In Gosu, you typically do not need to declare the type of variables:
@@ -117,7 +117,7 @@
       </p>
 
       <h3>If</h3>
-      <p>The <code>if</code> statement is just like every other sane language:
+      <p>The <code>if</code> statement works just like it does in every other sane language:
         <pre class="prettyprint">
   var x = 10
   if( x > 5 ) {
@@ -145,7 +145,7 @@
         </pre>
         <code>i</code> will be the zero-based index of the current loop of the iteration.
       </p>
-      <p>The <code>for</code> loop is null safe.  No incomprehensible NPEs when <code>aList</code> is <code>null</code>.
+      <p>The <code>for</code> loop is null safe: no NPE if <code>aList</code> is <code>null</code>.
       </p>
 
       <h3>Etc.</h3>
@@ -153,7 +153,7 @@
       </p>
 
       <h2>Working With Types</h2>
-      <p>Gosu allows you to determine the runtime type of a value with the <code>typeof</code>:</p>
+      <p>Gosu allows you to determine the runtime type of a value with the <code>typeof</code> operator:</p>
       <pre class="prettyprint">
   var x = "This is a String"
   var t = typeof x
@@ -161,7 +161,7 @@
       </pre>
       It the code above, the type of <code>t</code> is <code>gw.lang.reflect.IType</code>, which is the Gosu Type System's equivalent of <code>java.lang.Class</code>
       </p>
-      <p>Gosu has a way to test if an object is an instance of a type, like Java's <code>instanceof</code> keyword: <code>typeis</code>.  Here is an example:
+      <p>Gosu has a way to test if an object is an instance of a type, akin to Java's <code>instanceof</code> keyword: <code>typeis</code>.  Here is an example:
       <pre class="prettyprint">
   var x : Object
   x = "A String"
@@ -169,18 +169,18 @@
     print( "x is a String with length " + x.length )
   }
       </pre>
-      One interesting thing about the <code>typeis</code> operator is that how it interacts with logical operators and the <code>if</code> statement.  In the code above, note that <code>x</code> was <em>not</em> cast to <code>String</code>, but the <code>length</code> property on <code>String</code> was used in the <code>print</code> expression.  Gosu automatically downcast <code>x</code> to <code>String</code> after the <code>typeis</code> expression, and retained it for the body of the <code>if</code> statement.
+      One interesting thing about the <code>typeis</code> operator is that how it interacts with logical operators and the <code>if</code> statement.  In the code above, note that <code>x</code> was <em>not</em> cast to <code>String</code>, but within the <code>if</code> statement the <code>length</code> property on <code>String</code> was used.  Gosu automatically downcast <code>x</code> to <code>String</code> after the <code>typeis</code> expression, so no casting was necessary.
       </p>
       
       <h2>Properties</h2>
-      <p>Gosu supports formal properties, which are kind of like public fields in Java, but allow you to associate logic with the getting and setting of their values.  We will cover property definition below, but here is how you access them:
+      <p>Gosu supports properties, which are a bit like public fields in Java, but that allow you to associate logic with reading and writing.  We will cover property definition below, but here is how you access them:
         <pre class="prettyprint">
   var p = new MyGosuPersonClass()
   p.Name = "Joe"
   print( "The name of this person is ${p.Name}")
         </pre>
           Properties have some interesting and useful characteristics that will become apparent over time (e.g. they are both an <a href="http://en.wikipedia.org/wiki/Value_(computer_science)">rvalue and an lvalue.</a>)</p>
-      <p>Gosu automatically converts get/set methods in Java classes into properties, so they can be used with all the convenience of Gosu class properties:
+      <p>Gosu automatically converts get/set methods in Java classes into properties, so the following Java class:
         <pre class="prettyprint">
   public class MyJavaPersonClass {
     String _name;
@@ -200,7 +200,7 @@
   p.Name = "Joe"
   print( "The name of this person is ${p.Name}")
         </pre>
-         </p>
+      </p>
       
       <h2>Null Safety</h2>
       <p>If you wish to make a null-safe call to a method or property, you can prefix the '.' operator with a question mark, '?':
@@ -294,7 +294,7 @@ class SampleClass {
       <p>Gosu classes can extend other classes and implement interfaces, just like in Java, using the <code>extends</code> and <code>implements</code> keywords respectively.
       </p>
       <p>
-        One interesting feature of Gosu is the ability to delegate the implementation of an interface to a class variable:
+        One interesting additional feature of Gosu is the ability to delegate the implementation of an interface to a class variable:
       <pre class="prettyprint">
 uses java.lang.Runnable
 
@@ -311,7 +311,7 @@ class MyRunnable implements Runnable {
   }
 }
       </pre>
-        Note that the class <code>MyRunnable</code> does not declare a <code>run()</code> method, like <code>Runnable</code> requires.  That's because the delegate <code>_runnable</code> is doing the work for it.  Here's an example of this class in action:
+        <code>MyRunnable</code> does not declare a <code>run()</code> method, like <code>Runnable</code> requires.  That's because the delegate field <code>_runnable</code> is implementing the method for it:
       <pre class="prettyprint">
   var x = new MyRunnable()
   x.Impl = new Runnable() {

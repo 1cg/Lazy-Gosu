@@ -41,11 +41,11 @@
 
     <div class="content">
       <h1>Enhancements</h1>
-      <p>Enhancements provide a way to add methods and properties to existing classes.  They are similar to <a href="http://msdn.microsoft.com/en-us/library/bb383977.aspx">Extension Methods</a> in C#, but do not need to be explicitly imported.</p>
+      <p>Enhancements provide a way to add methods and properties to existing types.  They are similar to <a href="http://msdn.microsoft.com/en-us/library/bb383977.aspx">Extension Methods</a> in C#, but do not need to be explicitly imported.</p>
 
       <h2>Syntax</h2>
       <p>Enhancements must be defined in files ending in the <code>.gsx</code> suffix.  They cannot be defined inline within other gosu resources presently.</p>
-      <p>Here is an example enhancement, that adds a method to <code>java.lang.String</code>:
+      <p>Here is an example enhancement that adds a method to <code>java.lang.String</code>:
       <pre class="prettyprint">
   package example
   
@@ -86,7 +86,8 @@
       </pre>
       This method will now be available on all generic lists, and will be properly typed.
       <h3>Type Variable Reification</h3>
-      Type variables can be used in expressions in Gosu.  In Enhancements, the type variables are statically, rather than dynamically, reified, much like methods are statically, rather than dynamically dispatched.  The enhancement method <code>toTypedArray():T[]</code> on <code>Iterable&lt;T></code> demonstrates this:
+      <p>
+      Unlike in Java, type variables <em>can</em> be used in general expressions in Gosu.  In Enhancements, the type variables are statically, rather than dynamically, reified, much like enhancement methods are statically, rather than dynamically dispatched.  The enhancement method <code>toTypedArray():T[]</code> on <code>Iterable&lt;T></code> demonstrates this:
       <pre class="prettyprint">
   var lstOfStrings : List&lt;String> = {"a", "b", "c"}
   var arrOfStrings = lstOfStrings.toTypedArray() //returns a String[]
@@ -94,9 +95,11 @@
   var lstOfObjs : List&lt;Object> = lstOfStrings //type variables are covariant in Gosu, see <a href="generics.html">generics</a>        
   var arrOfObjs = lstOfStrings.toTypedArray() //returns an Object[]
       </pre>
+      This "best effort" reification usually does what you want, but can occasionally lead to surprising results.
+      </p>
       
       <h3>Enhancing Parameterized Types</h3>
-      <p>You can enhance parameterized types, which is a neat trick:</p>
+      <p>A really neat trick with enhancements is that you can enhance <em>parameterized</em> types:</p>
       <pre class="prettyprint">
   package example
   
@@ -116,6 +119,9 @@
     }
   }
       </pre>
+      This is how all lists of comparable objects have the <code>sort()</code> method on them, while other lists do not.<br/>
+      Sweet.
+      </p>
     </div>    
   </body>
 </html>
