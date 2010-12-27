@@ -94,7 +94,7 @@
       <h2>Developing in Ronin</h2>
       <p>For a complete tutorial on how to use ronin, you should check out the main <a href="http://code.google.com/p/ronin/">website</a>.</p>
       <p>To give you an idea of the flavor, though, here's a quick introduction:</p>
-      <p>Ronin maps URLs down to static methods on Gosu classes located in the special (to Ronin) <code>controller</code> package.  So a request like this:
+      <p>Ronin maps URLs down to methods on Gosu classes located in the special (to Ronin) <code>controller</code> package.  So a request like this:
         <pre>
   http://localhost:8080/Foo/bar
         </pre>
@@ -108,7 +108,7 @@
   uses ronin.*
 
   class Foo extends RoninController {
-    static function bar() {
+    function bar() {
       view.BarTemplate.render(writer, "Hello Ronin!")
     }
   }
