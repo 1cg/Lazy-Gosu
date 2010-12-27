@@ -70,14 +70,16 @@
     </pre>
     Tell you what.  You promise not to do that, and I promise not to make you deal with wildcards.
     </p>
+    <p>No deal?</p>  
     <p>You drive a hard bargain.</p>  
     <p>OK, what if I throw in a properly typed <code>List.contains()</code> method as well:
     <pre class="prettyprint">
  var lst = new java.util.List&lt;String>()
  lst.contains( 10 ) // compilation error in Gosu, unlike <a href="http://download.oracle.com/javase/6/docs/api/java/util/LinkedList.html#contains(java.lang.Object)">Java</a> and <a href="http://www.scala-lang.org/api/2.7.7/scala/Seq.html#contains%28Any%29">Scala</a>
     </pre>
-    Deal?
+    Turns out that (as of this writing) both Java and Scala <em>can't</em> properly type <code>contains()</code> due to their generics systems.
     </p>
+    <p>So now do we have a deal? </p>
      <h2>Generic Classes</h2>
      <p>You declare type variables just like you do in Java:
      <pre class="prettyprint">

@@ -44,7 +44,7 @@
       <p>Here's a miscellany of other Gosu features you might find useful:</p>
       
       <h2>Object Initializers</h2>
-      <p>You can set properties of an object in its constructor by using the object initializer syntax:
+      <p>You can set properties of an object after it's constructor by using the object initializer syntax:
       <pre class="prettyprint">
   var newObj = new MyClass() {
     :Prop1 = "Foo",
@@ -66,7 +66,7 @@
         </pre>
         You can use the using statement:
         <pre class="prettyprint">
-  using( var conn = getConnection() {
+  using( var conn = getConnection() ) {
     conn.execute( "Some advanced SQL" )
   }
         </pre>
