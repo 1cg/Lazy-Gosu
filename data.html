@@ -79,7 +79,7 @@
       You can see why the block syntax is preferred.
       </p>
       <p>
-      I didn't have to declare a type for <code>s</code> because it is defined in a context where Gosu can figure out the type for me.  This is typical.
+      I didn't have to declare a type for the block's parameter <code>s</code> because it is defined in a context where Gosu can figure out the type for me.  This is typical.
       </p>
       <p>with blocks you can often remove reams of iterative code you would end up writing in Java:
       <pre class="prettyprint">
@@ -93,6 +93,14 @@
       </p>
       <p>
       Blocks have other uses, but, by and large, the big win with them is in Collection manipulation.
+      </p>
+      <p>
+      Blocks and one-method interfaces are automatically converted between one another:
+      <pre class="prettyprint">
+  var r : Runnable
+  r = \-> print("This block was converted to a Runnable")
+      </pre>
+      This makes some Java APIs much more tolerable.
       </p>
 
       <h3>List Enhancements</h3>
