@@ -52,6 +52,28 @@
   }
       </pre>
       This will construct the <code>MyClass</code> object and then set the <code>Prop1</code> and <code>Prop2</code> properties.
+      </p>
+
+      <h2>Classpath Statement + Shebang</h2>
+      <p>Gosu programs can embed a classpath in their source, obviating the need for users to pass in a correct classpath externally:
+      <pre class="prettyprint">
+  #! /path/to/gosu
+  classpath "../src,../lib/sweet_lib1.jar"
+  
+  print( "Here is a sweet library object: ${new SweetLibraryObject()}")
+      </pre>
+      The classpath statement is comma delimited, to avoid system specific dependencies.  Each path on it will be added to the classpath.  If a path points at a folder and that folder contains jars, all those jars will be added to the classpath as well.
+      </p>
+      <p>This makes it much more pleasant to run gosu programs on *nix:
+      <pre>
+  Thumper carson$ ./my_sweet_gosu_program.gsp
+    Here is a sweet library object: super.SweetLibraryObject@12b27c3
+      </pre>
+      No wrapping scripts, no complicated class paths.
+      </p>
+      <p>
+      Nice.
+      </p>
 
       <h2>Using Statement</h2>
       <p>
