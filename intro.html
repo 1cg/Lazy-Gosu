@@ -230,7 +230,7 @@ class SampleClass {
     }
   }
 
-  // A public property getter, making this a read only property
+  // A public property getter, making 'Names' a read-only property
   property get Names() : List&lt;String> {
     return _names
   }
@@ -256,7 +256,7 @@ class SampleClass {
   var _names : List&lt;String> as Names
 
   // A public constructor
-  construct( names : List<String> ) {
+  construct( names : List&lt;String> ) {
     _names = names
   }
 
@@ -268,7 +268,7 @@ class SampleClass {
   }
 }
         </pre>
-        The '<code>as Names</code>' exposes the <code>_names</code> field as a property.  If you want the property to be read only, you can add the <code>readonly</code> modifier after the <code>as</code> keyword.
+        The '<code>as Names</code>' exposes the <code>_names</code> field as both a readable and writeable a property.  If you want the property to be read only, you can add the <code>readonly</code> modifier after the <code>as</code> keyword.
       </p>
       <h3>Named Arguments and Default Parameter Values</h3>
       <p>Gosu supports names arguments and default parameter values to help smooth out APIs.  Let's say you wanted to make the argument to <code>printNames()</code> optional, with a default value of <code>"> "</code>.  You could change the declaration to:<pre class="prettyprint">

@@ -50,7 +50,7 @@
   package example
   
   enhancement MyStringEnhancement : String {
-    function print() {
+    function printMe() {
       print( this )
     }
   }
@@ -59,7 +59,7 @@
       </p>
       <p>Given the enhancement above, you can invoke the <code>printMe()</code> method on Strings like this:
       <pre class="prettyprint">
-  "Hello World".print()
+  "Hello Enhancements".printMe()
       </pre>
       
       <h2>Semantics And Limitations</h2>
