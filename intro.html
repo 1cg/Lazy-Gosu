@@ -52,7 +52,7 @@
         <ul>
           <li>Gosu is an easier transition from Java than other languages.  The focus in Gosu is on making things simpler, rather than more complicated, and on extending existing Java functionality, rather than on inventing new concepts or libraries.</li>
           <li>Since Gosu retains static typing, it is possible to provide good modern IDE support.  Having an accurate list of methods pop up a developer hits '.' is as important a productivity tool as any language feature.</li>
-          <li>Gosu has a technology called the Open Type System.  This allows Gosu to integrate non-Gosu resources directly into the language, which makes for some buttery framework support.  For example, there is an XSD Type Loader that will inspect XSD files on the classpath and generate types for the Gosu compiler to work with, removing the need for an ugly code generation step.  Just drop an XSD in your source tree and, blam, go.  <br/><br/>Sweet.</li>
+          <li>Gosu has a technology called the Open Type System.  This allows Gosu to integrate non-Gosu resources directly into the language, which makes for some buttery framework support.  For example, there is an XSD Type Loader that will inspect XSD files on the classpath and generate types for the Gosu compiler to work with, removing the need for an ugly code generation step.  Just drop an XSD in your source tree and, blam, go.<br/><br/>Sweet.</li>
         </ul>
       </p>
 
@@ -62,7 +62,6 @@
           <li>Install Java (any version 1.5 or greater)</li>
           <li>Download Gosu from <a href="">http://gosu-lang.org</a></li>
           <li>Unzip it</li>
-          <li>If you are on *nix, make <code>bin/gosu.sh</code> executable</li>
         </ul>
         You can now run Gosu using the scripts in the <code>bin</code> directory.
       </p>
@@ -85,6 +84,31 @@
         </pre>
       </p>
       <p>You can use <code>gw.lang.cli.CommandLineAccess</code> to get at arguments passed to your Gosu program.</p>
+
+      <h2>Setting Up A Project</h2>
+      <p>
+        My favored approach right now is to do something like this:
+        <pre>
+  /proj_name
+    /src - Gosu classes, XSD's, WSDL's, etc.
+    /lib - 3rd party jars
+    /bin - Gosu programs
+    /test - A directory for your tests
+    build.vark - An <a href="http://vark.github.com">Aardvark</a> build file.
+        </pre>
+      </p>  
+      <p>
+        Given this layout, you can add the following to the top of your gosu programs in the <code>/bin</code> directory:
+        <pre class="prettyprint">
+  classpath "../src,../lib"
+        </pre>
+        This will add the <code>src</code> directory and all jars in the <code>lib</code> directory to the programs classpath, so you should be able to run your project without any crazy setup from the command line:
+      <pre>
+  Thumper carson$ gosu bin/my_prog.gsp
+  Hello Gosu Projects!
+      </pre>
+      </p>
+      <p>The <code>classpath</code> statement is discussed more on the <a href="misc.html">Misc</a> page</p>
 
       <h2>Math</h2>
       <p>Gosu supports the usual math operators, and they work on the major primitive and non-primitive numeric types, such as <code>BigDecimal</code> and <code>BigInteger</code></p>
@@ -249,6 +273,7 @@ class SampleClass {
   print( c.Names )</pre></li>
         </ul>
       </p>
+      
       <h3>Shorthand Property Syntax</h3>
       <p>Exposing a field as a property is a common pattern, so there is a short hand for it:
         <pre class="prettyprint">
@@ -323,6 +348,7 @@ class MyRunnable implements Runnable {
       </pre>
       Delegates give you a convenient way to favor <a href="http://www.artima.com/lejava/articles/designprinciples4.html">composition over inheritance</a>.
       </p>
+      
     </div>
   </body>
 </html>
