@@ -41,11 +41,12 @@
 
     <div class="content">
       <h1>XML</h1>
-      <p>XML is like English: unclear how it won out, but dug in like a tick now.  And, who knows, maybe there is some deep, spiritual meaning behind all the suffering it causes.</p>
-      <p>Gosu gives you a few ways to minimize the pain:</p>
+      <p>XML is like English: complicated, ugly, confounding and ubiquitous.</p>
+      <p>Gosu attempts to minimize the pain of working with XML with a few different libraries:</p>
       <h2>Untyped XML</h2>
       <p>If you just want to work with XML in an untyped, simple way, you can use <code>gw.xml.simple.SimpleXmlNode</code>:
       <pre class="prettyprint">
+        
   uses gw.xml.simple.SimpleXmlNode
 
   var xml = SimpleXmlNode.parse( "&lt;foo attr1='doh'>&lt;bar attr2='rey'/>&lt;/foo>" )
@@ -55,15 +56,17 @@
       </pre>
       You can use the <code>Descendents</code> property to get ahold of a collection of all children of a Node, which allows you to apply block-based slicing and dicing:
       <pre class="prettyprint">
+        
   var allReys = xml.Descendents.where( \ n -> n.Attributes["attr2"] == "rey" )
       </pre>
       Pretty easy to deal with.
       </p>
 
-      <h2>XSD</h2>
+      <h2>XSDs</h2>
       <p>If you have an XSD file, you can drop it in your source directory and start using it immediately, thanks to the <a href="ots.html">Open Type System</a></p>
       <p>Let's say you have an XSD like this:
       <pre class="prettyprint">
+        
   &lt;?xml version="1.0"?>
   &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     &lt;xs:element name="Person">
@@ -79,20 +82,21 @@
       </pre>
       And you drop it at <code>myapp/example.xsd</code>.  You can then start using the XSD-derived types like so:
       <pre class="prettyprint">
+        
   var x = new myapp.example.Person()
   x.Age = 32
   x.Firstname = "Joe"
   x.Lastname = "Blow"
   x.print() // print out the
       </pre>
-      No code gen, just drop in the XSD and go.</p>
-      <p>Hell yes.</p>
+      No code gen, just drop in the XSD and go, through the magic of the Open Type System.</p>
       <p>
         I don't understand XSD at all, and even I can use <i>that</i>.
       </p>
       <h2>WSDL</h2>
-      <p>Similarly, if you have a WSDL like the "simple" (<b>*barf*</b>) example defined <a href="http://ws.cdyne.com/WeatherWS/Weather.asmx?wsdl">here</a>, and you drop it at <code>myapp/weather.wsdl</code>, you can use the WSDL-derived types like so:
+      <p>Similarly, if you have a WSDL like the "simple" (<b>*barf*</b>) example defined <a href="http://ws.cdyne.com/WeatherWS/Weather.asmx?wsdl">here</a>, and you drop it in your source directory at <code>myapp/weather.wsdl</code>, you can use the WSDL-derived types like so:
       <pre class="prettyprint">
+        
   var x = new myapp.weather()
   var forecast = x.GetCityForecastByZIP("95816")
   print( forecast.ForecastResult.Forecast.map( \ f -> f.Desciption ).join("\n") )
@@ -101,7 +105,7 @@
       </p>
       <p>Almost makes you not hate XML, doesn't it?</p>
       <p>Almost.</p>
-      <p>By the way, David Green, an engineer at Guidewire, is the guy who just made your life so much better.</p>
+      <p>By the way, Dana Lank, an engineer at Guidewire, is the person who just made your life so much better.</p>
     </div>
   </body>
 </html>

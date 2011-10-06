@@ -48,9 +48,9 @@
 
       <p>First, a bit of philosophy:</p>
       
-      <p>Java has most of the functionality a developer would want.  Sometimes the APIs for this functionality are insane.  As an example, writing text to a file is something I have to look up almost every time, and I've been coding in Java for a decade.  To address these situations Gosu will typically offer a simpler alternative, usually built in to the obvious Java class via enhancements.  Other times the API is fine and Gosu won't offer anything beyond that.</p>  
+      <p>Java has most of the functionality a developer would want.  Sometimes the APIs for this functionality are insane.  As an example, writing text to a file is something I have to look up almost every time, and I've been coding in Java for a decade.  To address these situations Gosu will typically offer a simpler alternative, usually built in to the obvious Java class via enhancements.  Other times the API Java has is fine and Gosu won't offer anything beyond that.</p>  
       <p>Gosu is <em>not</em> an attempt to reinvent the world.  The core Java libraries are very solid and, with a bit of touching up and leveraging some of Gosu's language features, these libraries can be both simple and more powerful.</p>
-      <p>Thus, there are not many classes in the Gosu API and they are somewhat sporadic, addressing corners of the standard Java API that we were unhappy with.  There is not a new collections framework, for example. <code>ArrayList</code> and <code>HashMap</code> have served us well, and there is no reason to retire them.  Instead, Gosu makes Java developers more productive with these classes by adding functionality to them.</p>
+      <p>Because of this, there are not many user facing classes in the Gosu API and they are somewhat sporadic, addressing corners of the standard Java API that we were unhappy with.  There is not a new collections framework, for example. <code>ArrayList</code> and <code>HashMap</code> have served us well, and there is no reason to retire them.  Instead, Gosu makes Java developers more productive with these classes by adding functionality to them.</p>
 
       <h1>Highlights</h1>
 
@@ -65,14 +65,16 @@
       <h3><code>gw.util.AutoMap</code></h3>
       <p>This class wraps a map and will automatically create a value in the map for a key miss.  You can convert a regular map to an <code>AutoMap</code> easily:
          <pre class="prettyprint">
-           var map = { "foo" -> "bar", "doh" -> "rey" }                         // creates a regular HashMap&lt;String, String>
-           var autoMap = map.toAutomap( \ s -> 'There is no value for "${s}"' ) // convert it to an AutoMap
-           print( autoMap["blah"] )                                             // prints "There is no value for "blah"
+           
+  var map = { "foo" -> "bar", "doh" -> "rey" }                         // creates a regular HashMap&lt;String, String>
+  var autoMap = map.toAutomap( \ s -> 'There is no value for "${s}"' ) // convert it to an AutoMap
+  print( autoMap["blah"] )                                             // prints "There is no value for "blah"
          </pre></p>
 
       <h3><code>gw.util.concurrent.LazyVar</code></h3>
       <p>This class gives you a thread-safe way to implement a lazy variable by passing in a simple initialization block:
          <pre class="prettyprint">
+           
   var lazyValue = LazyVar.create( \-> expensiveFunction() )
   ...
   var actualValue = lazyValue.get()

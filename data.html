@@ -41,67 +41,105 @@
 
     <div class="content">
       <h1>Data</h1>
-      <p>Data structures are probably the most important feature of a language when it comes to developer productivity.  Java has some great core implementations of data structures, such as <code>java.util.ArrayList</code> and <code>java.util.HashTable</code>, but doesn't help you much when you want to manipulate them.</p>
-      <p>Gosu adds unctionality to the core data structures in Java, and provides additional syntactic support for them as well.</p>
+      <p>Data structures are one of the most important aspects of a language when it comes to productivity.  Java has great implementations of the common data structures (e.g <code>java.util.ArrayList</code> and <code>java.util.HashTable</code>) but it doesn't help you much when you want to manipulate them: you often end up writing out the same code over and over again to filter lists, to sort them, etc.</p>
+      <p>Gosu addresses this problem by adding new methods that leverage Gosu's language features (blocks, in particular) to the core data structures from Java.  Gosu also provides additional syntactic support for common collections.</p>
 
       <h2>Lists</h2>
       <p>As you may have noticed, a list in Gosu can be declared by using <code>{}</code>'s:
       <pre class="prettyprint">
+        
   var lstOfStrings = {"This", "is", "a", "list"}
       </pre>
       You can use Array-style access on lists:
       <pre class="prettyprint">
+        
   var lstOfStrings = {"This", "is", "a", "list"}
   print( lstOfStrings[2] ) // prints "a"
       </pre>
       </p>      
       <h3>Blocks</h3>
-      <p>Lists have a lot of enhancement methods on them, many of which use blocks.  Blocks (also called closures or lambda expressions) are a simple way to specify an inline function.  They have a lot of uses, but they are absolute butter when it comes to data structure manipulation:
+      <p>Lists in Gosu have a lot of enhancement methods on them, many of which use blocks.  Blocks (also called closures or lambda expressions) are a simple way to specify an inline function.  They have a lot of uses, but they really shine in data structure manipulation:
       <pre class="prettyprint">
+        
   var lstOfStrings = {"This", "is", "a", "list"}
   var longStrings = lstOfStrings.where( \ s -> s.length > 2 )
   print( longStrings.join(", ") )  // prints "This, list"
       </pre>
-      That funny <code>\-></code> thing is the block.  It declares a mini-function that says "Given a String <code>s</code> return whether <code>s.length</code> is greater than two".  You can think of it as an inline version of this function:
+      The funny <code>\-></code> thing is the block.  It declares a mini-function that says "Given a String <code>s</code> return whether <code>s.length</code> is greater than two".  You can think of it as an inline version of this function:
       <pre class="prettyprint">
+        
   function isLongerThanTwo( s : String ) : boolean {
     return s.length > 2
   }
       </pre>
       Or, if you prefer, this anonymous inner class:
           <pre class="prettyprint">
-  var insanity = new com.google.common.base.Predicate&lt;String>() {
+            
+  var inner = new com.google.common.base.Predicate&lt;String>() {
     function apply( s : String ) : boolean {
       return s.length > 2
     }
   }
       </pre>      
-      You can see why the block syntax is preferred.
+      Blocks allow you to express this logic much more succinctly.
       </p>
       <p>
-      I didn't have to declare a type for the block's parameter, <code>s</code>, because it is defined in a context where Gosu can figure out that it is a String.  Typically you will not have to define the types of the arguments of blocks.
+      Note that I didn't have to declare a type for the block's parameter, <code>s</code>, like I did in the function and anonymous class above.  This because the block is defined in a context where Gosu can figure out the argument is a String.  Typically you will not have to define the types of the arguments of blocks.
       </p>
-      <p>With blocks you can often remove reams of iterative code you would end up writing in Java:
+      <p>With blocks you can often remove loads of iterative code you would end up writing in Java.  Consider this java code:
+
       <pre class="prettyprint">
+
+  List&lt;String> lstOfStrings = Arrays.asList("This", "is", "a", "list");
+
+  List&lt;String> longStrings = new ArrayList&lt;String>();
+  
+  for( String s : lstOfStrings ) {
+    if( s.length() > 2 ) {
+      longStrings.add( s.toUpperCase() );
+    }
+  }
+  
+  Collections.sort(longStrings, new Comparator&lt;String>() {
+    public int compare( String s, String s2 ) {
+      return s.compareTo( s2 );
+    }
+  })
+
+  StringBuilder sb = new StringBuilder();
+  for( String s : longStrings ) {
+    if(sb.length() != 0) {
+      sb.append(", ");
+    }
+    sb.append(s);
+  }
+
+  System.out.println(sb.toString());
+      </pre>
+
+      This code can be written in Gosu like so:
+      <pre class="prettyprint">
+        
   var lstOfStrings = {"This", "is", "a", "list"}
   var longStrings = lstOfStrings.where( \ s -> s.length > 2 )
                                 .map( \ s -> s.toUpperCase() )  // converts each string to upper case
                                 .orderBy( \ s -> s )            // there is a .order() method that could be used here instead
   print( longStrings.join(", ") ) // prints "LIST, THIS"
       </pre>
-      This code filters the strings, then converts them to upper case and finally sorts them.  Comparable code in Java is less clear, more coupled (with a mix of algorithmic steps in a for-loop, for example) and almost certainly more verbose.
+      In Gosu the code more clearly expressed the algorithm, it is less coupled (there is no mix of algorithmic steps in a for-loop, for example) and certainly less verbose.
       </p>
       <p>
       Blocks have other uses, but, by and large, the big win with them is in Collection manipulation.
       </p>
       <h4>Blocks and Interfaces</h4>
       <p>
-      Blocks and one-method interfaces are automatically converted between one another:
+      Java has many interfaces that contain a single method, which are used as a stand-in for actual closures.  In order to facilitate Java interoperability, Gosu blocks and one-method interfaces are automatically converted between one another:
       <pre class="prettyprint">
+        
   var r : Runnable
   r = \-> print("This block was converted to a Runnable")
       </pre>
-      This makes some Java APIs much more tolerable.
+      This makes some Java APIs very enjoyable to work with in Gosu.
       </p>
 
       <h3>List Enhancements</h3>
@@ -126,10 +164,12 @@
       <h2>Maps</h2>
       <p>Maps can be declared by using <code>{}</code>'s with a right-arrow between keys and values:
       <pre class="prettyprint">
+        
   var mapOfStringsToStrings = {"This" -> "is", "a" -> "map"}
       </pre>
       You can also use Array-style access on maps:
       <pre class="prettyprint">
+        
   var mapOfStringsToStrings = {"This" -> "is", "a" -> "map"}
   print( mapOfStringsToStrings["This"] ) // prints "is"
       </pre>
@@ -143,6 +183,7 @@
       </ul>
       One useful trick is to use methods on <code>Map.entrySet()</code> to modify the Map:
       <pre class="prettyprint">
+        
   var mapOfStringsToStrings = {"This" -> "is", "a" -> "map"}
   // removes all entries with a key whose length is less than 2
   mapOfStringsToStrings.entrySet().retainWhere( \ p -> p.Key.length > 2  )

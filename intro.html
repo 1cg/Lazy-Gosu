@@ -81,7 +81,13 @@
       <center>
         <img src="tester_completion.png">
       </center>
-
+      <p>Some useful keyboard shortcuts are:</p>
+      <ul>
+        <li>Ctrl-Space - Complete code</li>
+        <li>Ctrl-T - Show type at current position</li>
+        <li>Ctrl-W - Expand Selection</li>
+        <li>F5 - Run the current program</li>
+      </ul>
       <h2>Programs</h2>
       <p>
         Gosu doesn't have the concept of a <code>public static void main(String[] args)</code> method, because that's just crazy.  Instead, it  has programs, like Ruby or Python, which are bits of Gosu code in a file ending in the <code>.gsp</code> extension.</p>
@@ -306,13 +312,20 @@
         <ul>
           <li>The <code>uses</code> statement, which is identical to the <code>import</code> statement in Java, and makes a class (or package of classes) available for use without qualification.</li>
           <li>A class variable, declared using the <code>var</code> keyword, just like local variables.  Class variables default to private access.  You can declare them to be <code>static</code> as well.</li>
-          <li>A class constructor, declared using the <code>construct</code> keyword.  This constructor allows you to declare new instances of<code>SampleClass</code> like so:<pre class="prettyprint">  var c = new SampleClass({"joe", "john", "jack"})</pre>Constructors default to public access.</li>
+          <li>A class constructor, declared using the <code>construct</code> keyword.  This constructor allows you to declare new instances of<code>SampleClass</code> like so:<pre class="prettyprint">
+            
+  var c = new SampleClass({"joe", "john", "jack"})
+              </pre>Constructors default to public access.</li>
           <li>A function, declared using the <code>function</code> keyword.  This function takes a <code>String</code> argument, and returns no value, so no return type declaration is necessary.  It can be invoked like so:<pre class="prettyprint">
+            
   var c = new SampleClass({"joe", "john", "jack"})
-  c.printNames("* ")</pre></li>
+  c.printNames("* ")
+  </pre></li>
           <li>A property getter, declared using the <code>property</code> and <code>get</code> keywords.  This property returns a list of strings.  It can be invoked like so:<pre class="prettyprint">
+            
   var c = new SampleClass({"joe", "john", "jack"})
-  print( c.Names )</pre></li>
+  print( c.Names )
+  </pre></li>
         </ul>
       </p>
       
@@ -350,14 +363,24 @@
         </pre>
         And now invoke it like so:
         <pre class="prettyprint">
+          
   var c = new SampleClass({"joe", "john", "jack"})
-  c.printNames() // No argument is necessary, it will use the default value of "> "</pre>
+  c.printNames() // No argument is necessary, it will use the default value of "> "
+  </pre>
       Additionally, Gosu allows you to use named arguments when you are working with non-overloaded methods on Gosu classes:
       <pre class="prettyprint">
+        
   var c = new SampleClass({"joe", "john", "jack"})
-  c.printNames(:prefix = "* ")</pre>
+  c.printNames(:prefix = "* ")
+  </pre>
       This can be used to clarify code, so you don't end up with stuff like this:
-      <pre class="prettyprint">  someMethod(true, false, null, false, true)  //bwah?</pre>    
+      <pre class="prettyprint">
+  someMethod(true, false, null, false, true)  //bwah?
+  
+  someMethod( :enableLogging = true, :debug = false, 
+              :contextObject = null, :trace = false, 
+              :summarizeTiming = true)  //Oh, I see
+      </pre>    
       </p>
       <h3>Superclasses, Interfaces and Delegates</h3>
       <p>Gosu classes can extend other classes and implement interfaces, just like in Java, using the <code>extends</code> and <code>implements</code> keywords respectively.

@@ -44,12 +44,13 @@
       <p>Gosu supports Java-style Generics, but the rules are slightly different:
         <ul>
           <li>There are no wildcards</li>
-          <li>Type parameters are <a href="http://en.wikipedia.org/wiki/Covariance">covariant</a>.  This is not sound, and that does not matter.</li>
+          <li>Type parameters are <a href="http://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)">covariant</a>.  This is not sound, and that does not matter.</li>
         </ul>
      </p>
      <h2>Using Generics</h2>
      <p>You use generics just like you do in Java:
      <pre class="prettyprint">
+       
   var lst = new java.util.List&lt;String>()
   lst.add("A String")
   for( s in lst ) {
@@ -60,29 +61,31 @@
      </p>
     <p>When I say type parameters are covariant, what I mean is that this code works:
     <pre class="prettyprint">
+      
  var lst = new java.util.List&lt;String>()
  lst.add("A String")
  var lstOfObjs : List&lt;Object> = lst // This assignment is allowed, since String is assignable to Object
     </pre>
     Technically, this is unsound, because you could do this:
     <pre class="prettyprint">
+      
   lstOfObjs.add( 11 ) // oops
     </pre>
-    Tell you what.  You promise not to do that, and I promise not to make you deal with wildcards.
+    However, this is not a common error, as evidenced by the fact that Java was able to be a perfectly productive programming language for many years with untyped collections, and by the fact that so many people are productive in dynamically typed languages.
     </p>
-    <p>No deal?</p>  
-    <p>You drive a hard bargain.</p>  
-    <p>OK, what if I throw in a properly typed <code>List.contains()</code> method as well:
+    <p>An advantage of this approach to Generics is that Gosu can have a properly typed <code>List.contains()</code> method as well:
     <pre class="prettyprint">
+      
  var lst = new java.util.List&lt;String>()
  lst.contains( 10 ) // compilation error in Gosu, unlike <a href="http://download.oracle.com/javase/6/docs/api/java/util/LinkedList.html#contains(java.lang.Object)">Java</a> and <a href="http://www.scala-lang.org/api/2.7.7/scala/Seq.html#contains%28Any%29">Scala</a>
     </pre>
-    Turns out that (as of this writing) both Java and Scala <em>can't</em> properly type <code>contains()</code> due to their generics systems.
+    It turns out that (as of this writing) both Java and Scala <em>can't</em> properly type <code>contains()</code> due to their generics systems.
     </p>
-    <p>So now do we have a deal? </p>
+    <p>Covariant Generics will not please people who enjoy type theory or who feel that a type system is there to catch every possible error, but, in our experience, this approach gives you the biggest bang for your buck when writing practical software.</p>
      <h2>Generic Classes</h2>
      <p>You declare type variables just like you do in Java:
      <pre class="prettyprint">
+       
   package example
   
   class MyGenericClass&lt;T> {
@@ -95,6 +98,7 @@
      </pre>
      <p>You can constrain type variables just like you do in Java:
       <pre class="prettyprint">
+        
    package example
 
    class MyGenericClass&lt;T extends Runnable> {
@@ -108,6 +112,7 @@
       </p>
       <p>You can refer to type variables as expressions:
       <pre class="prettyprint">
+        
   package example
   
   uses gw.lang.reflect.IType
@@ -127,6 +132,7 @@
       </p>
       <p>You can also declare generic functions:
       <pre class="prettyprint">
+        
   package example
 
   class MyGenericClass&lt;T> {
@@ -143,11 +149,13 @@
       </pre>
       which are invoked as you would expect:
       <pre class="prettyprint">
+        
   var x = MyGenericClass.create&lt;String>("A String")
       </pre>
       Of course, you can just let type inference do its thing as well:
       </p>
       <pre class="prettyprint">
+        
   var x = MyGenericClass.create("A String") // Still typed as MyGenericClass&lt;String> thanks to type inference
       </pre>
       <h2>Reification</h2>

@@ -103,13 +103,14 @@
         <p>
         Let's create a simple controller that answers to the URL above.  Inside the <code>src/controller</code> directory in your Ronin project, create the a <code>Foo.gs</code> file with the following content:
         <pre class="prettyprint">
+          
   package controller
 
   uses ronin.*
 
   class Foo extends RoninController {
     function bar() {
-      view.BarTemplate.render(writer, "Hello Ronin!")
+      view.BarTemplate.render(Writer, "Hello Ronin!")
     }
   }
         </pre>
@@ -118,6 +119,7 @@
         <p>
         In the <code>src/view</code> directory, create a file named <code>BarTemplate.gst</code> with the following content:
         <pre class="prettyprint">
+          
   &lt;%@ params( message : String ) %>
   &lt;html>
     &lt;body>
@@ -130,9 +132,6 @@
         </p>
         <p>
         Now when you navigate to <code>http://localhost:8080/Foo/bar</code>, the controller you created will be invoked and output the template.
-        </p>
-        <p>
-        Ronin offers a way to work with a database as well, and is making rapid progress.  Please check the project out and contribute!
         </p>
     </div>
   </body>
