@@ -52,7 +52,7 @@
         <ul>
           <li>Gosu is an easier transition from Java than other languages.  The focus in Gosu is on making things simpler, rather than more complicated, and on extending existing Java functionality, rather than on inventing new concepts or libraries.</li>
           <li>Since Gosu retains static typing, it is possible to provide good modern IDE support.  Having an accurate list of methods pop up a developer hits '.' is as important a productivity tool as any language feature.</li>
-          <li>Gosu has a technology called the Open Type System.  This allows Gosu to integrate non-Gosu resources directly into the language, which makes for some buttery framework support.  For example, there is an XSD Type Loader that will inspect XSD files on the classpath and generate types for the Gosu compiler to work with, removing the need for an ugly code generation step.  Just drop an XSD in your source tree and, blam, go.<br/><br/>Sweet.</li>
+          <li>Gosu has a technology called the Open Type System.  This allows Gosu to integrate non-Gosu resources directly into the language, which makes for some awesome framework support.  For example, there is an XSD Type Loader that will inspect XSD files on the classpath and generate types for the Gosu compiler to work with, removing the need for an ugly code generation step.  Just drop an XSD in your source tree and, blam, go.</li>
         </ul>
       </p>
 
@@ -63,31 +63,49 @@
           <li>Download Gosu from <a href="">http://gosu-lang.org</a></li>
           <li>Unzip it</li>
         </ul>
-        You can now run Gosu using the scripts in the <code>bin</code> directory.
+        And that's it.  You can now run Gosu using the scripts in the <code>bin</code> directory of the gosu distribution.
       </p>
+
+      <h2>Playing</h2>
+      <p>Gosu ships with a small built in editor that you can use to play around with.  If you run <code>bin/gosu</code> with no arguments, you should get a window like this:
+      </p>
+      
+      <center>
+        <img src="tester.png">
+      </center>
+
+      <p>
+        You can use this to play around with gosu, write simple programs, etc.  The editor offers simple code completion and a few other niceties:
+      </p>
+
+      <center>
+        <img src="tester_completion.png">
+      </center>
 
       <h2>Programs</h2>
       <p>
         Gosu doesn't have the concept of a <code>public static void main(String[] args)</code> method, because that's just crazy.  Instead, it  has programs, like Ruby or Python, which are bits of Gosu code in a file ending in the <code>.gsp</code> extension.</p>
         <p>Here is <code>hello_word.gsp</code>:
         <pre class="prettyprint">
+          
   print( "Hello World!")
         </pre>
-        Easy enough?
+        Easy enough, right?
       </p>
       <p>
         You run this program like so:
         <pre>
+          
   Thumper carson$ gosu hello_world.gsp
   Hello World!
   Thumper carson$
         </pre>
       </p>
-      <p>You can use <code>gw.lang.cli.CommandLineAccess</code> to get at arguments passed to your Gosu program.</p>
+      <p>You can use the <code>gw.lang.cli.CommandLineAccess</code> class to get at arguments passed to your Gosu program.</p>
 
       <h2>Setting Up A Project</h2>
       <p>
-        My favored approach right now is to do something like this:
+        My favored approach right now is to lay out a project like this:
         <pre>
   /proj_name
     /src - Gosu classes, XSD's, WSDL's, etc.
@@ -100,10 +118,12 @@
       <p>
         Given this layout, you can add the following to the top of your gosu programs in the <code>/bin</code> directory:
         <pre class="prettyprint">
+          
   classpath "../src,../lib"
         </pre>
-        This will add the <code>src</code> directory and all jars in the <code>lib</code> directory to the programs classpath, so you should be able to run your project without any crazy setup from the command line:
+        This classpath statement will add the <code>src</code> directory and all jars in the <code>lib</code> directory to the classpath when this program is launched, so you can run your project without any crazy command line setup or secondary scripts:
       <pre>
+        
   Thumper carson$ gosu bin/my_prog.gsp
   Hello Gosu Projects!
       </pre>
@@ -127,6 +147,7 @@
       <h2>Variables and Control Flow</h2>
       <p>In Gosu, you typically do not need to declare the type of variables:
       <pre class="prettyprint">
+        
   var x = 10
   print( x + x ) // prints 20
       </pre>
@@ -135,6 +156,7 @@
       <p>
       If you want to explicitly type the variable, you put the type annotation after the variable name:
           <pre class="prettyprint">
+            
   var x : int = 10
   print( x + x ) // prints 20
           </pre>
@@ -143,6 +165,7 @@
       <h3>If</h3>
       <p>The <code>if</code> statement works just like it does in every other sane language:
         <pre class="prettyprint">
+          
   var x = 10
   if( x > 5 ) {
     print( "x was greater than 5")
@@ -153,15 +176,17 @@
       <h3>For</h3>
       <p>The <code>for</code> statement is similar to other languages:
         <pre class="prettyprint">
-  var aList = {"a", "b", "c"}
+          
+  var aList = {"a", "b", "c"} // declare a List&lt;String>
   for( x in aList ) {
     print( x )
   }
        </pre>
-       The <code>for</code> statement works with arrays and classes that implement <code>java.lang.Iterable</code>.  Note that <code>x</code> is explicitly typed to <code>java.lang.String</code> above, via type inference.
+       The <code>for</code> statement works with both arrays and classes that implement <code>java.lang.Iterable</code>.  Note that <code>x</code> is explicitly typed to <code>java.lang.String</code> above, via type inference.
       </p>
-      <p>Sometimes you want the index of an iteration.  You can use this syntax:
+      <p>Sometimes you want the index of an iteration.  You can use this syntax to get it:
         <pre class="prettyprint">
+          
   var aList = {"a", "b", "c"}
   for( x in aList index i ) {
     print( i + ":" + x )
@@ -169,7 +194,17 @@
         </pre>
         <code>i</code> will be the zero-based index of the current loop of the iteration.
       </p>
-      <p>The <code>for</code> loop is null safe: no NPE if <code>aList</code> is <code>null</code>.
+      <p>Sometimes you want the iterator for the loop.  You can use this syntax to get it:
+        <pre class="prettyprint">
+          
+  var aList = {"a", "b", "c"}
+  for( x in aList iterator it ) {
+    it.remove()
+  }
+        </pre>
+        <code>it</code> can be used to safely remove items, for example.
+      </p>
+      <p>Note that the <code>for</code> loop is null safe: no NPE occurs if <code>aList</code> is <code>null</code>, rather the loop simply does not execute.
       </p>
 
       <h3>Etc.</h3>
@@ -179,6 +214,7 @@
       <h2>Working With Types</h2>
       <p>Gosu allows you to determine the runtime type of a value with the <code>typeof</code> operator:</p>
       <pre class="prettyprint">
+        
   var x = "This is a String"
   var t = typeof x
   print( t.Name ) // prints java.lang.String
@@ -187,6 +223,7 @@
       </p>
       <p>Gosu has a way to test if an object is an instance of a type, akin to Java's <code>instanceof</code> keyword: <code>typeis</code>.  Here is an example:
       <pre class="prettyprint">
+        
   var x : Object
   x = "A String"
   if( x typeis String ) {
@@ -197,8 +234,9 @@
       </p>
       
       <h2>Properties</h2>
-      <p>Gosu supports properties, which are a bit like public fields in Java, but that allow you to associate logic with reading and writing.  We will cover property definition below, but here is how you access them:
+      <p>Gosu supports properties, which are a bit like public fields in Java, but they allow you to associate logic with the reading and writing operations.  We will cover property definition below, but this is how you access them:
         <pre class="prettyprint">
+          
   var p = new MyGosuPersonClass()
   p.Name = "Joe"
   print( "The name of this person is ${p.Name}")
@@ -206,6 +244,7 @@
           Properties have some interesting and useful characteristics that will become apparent over time (e.g. they are both an <a href="http://en.wikipedia.org/wiki/Value_(computer_science)">rvalue and an lvalue.</a>)</p>
       <p>Gosu automatically converts get/set methods in Java classes into properties, so the following Java class:
         <pre class="prettyprint">
+          
   public class MyJavaPersonClass {
     String _name;
     
@@ -220,6 +259,7 @@
         </pre>
         Can be used like so:
         <pre class="prettyprint">
+          
   var p = new MyJavaPersonClass()
   p.Name = "Joe"
   print( "The name of this person is ${p.Name}")
@@ -229,36 +269,38 @@
       <h2>Null Safety</h2>
       <p>If you wish to make a null-safe call to a method or property, you can prefix the '.' operator with a question mark, '?':
         <pre class="prettyprint">
+          
   var x : String = null
   print( x?.length ) // prints "null"
         </pre>
       </p>
 
       <h2>Classes</h2>
-      <p>Gosu classes are defined with much the same syntax as other programming languages.  You can define classes inside a Gosu program, or define them as top level classes in files ending in <code>.gs</code>.  Here's a basic class:
+      <p>Gosu classes are defined with much the same syntax as other programming languages.  You can define classes inside a Gosu program, or in a file ending with the <code>.gs</code> extension.  Here is a basic class:
         <pre class="prettyprint">
-uses java.util.List
+          
+  uses java.util.List
 
-class SampleClass {
-  var _names : List&lt;String> // a private class variable, which is a list of Strings
+  class SampleClass {
+    var _names : List&lt;String> // a private class variable, which is a list of Strings
 
-  // A public constructor
-  construct( names : List&lt;String> ) {
-    _names = names
-  }
+    // A public constructor
+    construct( names : List&lt;String> ) {
+      _names = names
+    }
 
-  // A public function
-  function printNames( prefix : String ) {
-    for( n in _names ) {
-      print( prefix + n )
+    // A public function
+    function printNames( prefix : String ) {
+      for( n in _names ) {
+        print( prefix + n )
+      }
+    }
+
+    // A public property getter, making 'Names' a read-only property
+    property get Names() : List&lt;String> {
+      return _names
     }
   }
-
-  // A public property getter, making 'Names' a read-only property
-  property get Names() : List&lt;String> {
-    return _names
-  }
-}
         </pre>
         The above code demonstrates the following features:
         <ul>
@@ -275,28 +317,30 @@ class SampleClass {
       </p>
       
       <h3>Shorthand Property Syntax</h3>
-      <p>Exposing a field as a property is a common pattern, so there is a short hand for it:
+      <p>Exposing a field as a property is a common pattern, so there is a short hand syntax for it:
         <pre class="prettyprint">
-class SampleClass {
-  var _names : List&lt;String> as Names
+          
+  class SampleClass {
+    var _names : List&lt;String> as Names
 
-  // A public constructor
-  construct( names : List&lt;String> ) {
-    _names = names
-  }
+    // A public constructor
+    construct( names : List&lt;String> ) {
+      _names = names
+    }
 
-  // A public function
-  function printNames( prefix : String ) {
-    for( n in _names ) {
-      print( prefix + n )
+    // A public function
+    function printNames( prefix : String ) {
+      for( n in _names ) {
+        print( prefix + n )
+      }
     }
   }
-}
         </pre>
-        The '<code>as Names</code>' exposes the <code>_names</code> field as both a readable and writeable a property.  If you want the property to be read only, you can add the <code>readonly</code> modifier after the <code>as</code> keyword.
+        The '<code>as Names</code>' bit exposes the <code>_names</code> field as both a readable and writeable a property.  If you want the property to be read only, you can add the <code>readonly</code> modifier after the <code>as</code> keyword.
       </p>
       <h3>Named Arguments and Default Parameter Values</h3>
       <p>Gosu supports names arguments and default parameter values to help smooth out APIs.  Let's say you wanted to make the argument to <code>printNames()</code> optional, with a default value of <code>"> "</code>.  You could change the declaration to:<pre class="prettyprint">
+        
   // A public function
   function printNames( prefix : String = "> ") {
     for( n in _names ) {
@@ -307,7 +351,7 @@ class SampleClass {
         And now invoke it like so:
         <pre class="prettyprint">
   var c = new SampleClass({"joe", "john", "jack"})
-  c.printNames() //No argument is necessary, it will use the default</pre>
+  c.printNames() // No argument is necessary, it will use the default value of "> "</pre>
       Additionally, Gosu allows you to use named arguments when you are working with non-overloaded methods on Gosu classes:
       <pre class="prettyprint">
   var c = new SampleClass({"joe", "john", "jack"})
@@ -321,23 +365,25 @@ class SampleClass {
       <p>
         One interesting additional feature of Gosu is the ability to delegate the implementation of an interface to a class variable:
       <pre class="prettyprint">
-uses java.lang.Runnable
 
-class MyRunnable implements Runnable {
-  //A delegate, exposed as the Impl property
-  delegate _runnable represents Runnable
+  uses java.lang.Runnable
+
+  class MyRunnable implements Runnable {
+    //A delegate, exposed as the Impl property
+    delegate _runnable represents Runnable
   
-  property get Impl : Runnable {
-    return _runnable
-  }
+    property get Impl : Runnable {
+      return _runnable
+    }
   
-  property set Impl( r : Runnable ) {
-    _runnable = r
+    property set Impl( r : Runnable ) {
+      _runnable = r
+    }
   }
-}
       </pre>
         <code>MyRunnable</code> does not declare a <code>run()</code> method, like <code>Runnable</code> requires.  That's because the delegate field <code>_runnable</code> is implementing the method for it:
       <pre class="prettyprint">
+        
   var x = new MyRunnable()
   x.Impl = new Runnable() {
     function run() {

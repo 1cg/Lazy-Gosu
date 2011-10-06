@@ -47,6 +47,7 @@
       <p>Enhancements must be defined in files ending in the <code>.gsx</code> suffix.  They cannot be defined inline within other gosu resources presently.</p>
       <p>Here is an example enhancement that adds a method to <code>java.lang.String</code>:
       <pre class="prettyprint">
+        
   package example
   
   enhancement MyStringEnhancement : String {
@@ -59,21 +60,24 @@
       </p>
       <p>Given the enhancement above, you can invoke the <code>printMe()</code> method on Strings like this:
       <pre class="prettyprint">
+        
   "Hello Enhancements".printMe()
       </pre>
       
       <h2>Semantics And Limitations</h2>
       The above code can be thought of as shorthand for this code:
       <pre class="prettyprint">
+        
   example.MyStringEnhancement.print( "Hello World" )
       </pre>
       Enhancements are <em>statically</em> dispatched.  This means they cannot be used to implement interfaces or to achieve polymorphism (unless you use a filthy, awful hack.)
       </p>
-      <p>We often refer to using enhancements as "donkey patching" a class.  They are kind of like a <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patch</a>, but a bit more formalized.  A class is missing a method?  Donkey patch it, man.</p>
+      <p>We informally refer to using enhancements as "donkey patching" a class.  They are kind of like a <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patch</a>, but a bit more formalized.  Only a bit.</p>
 
       <h2>Generics</h2>
       Enhancements can be generic, so you can add an enhancement to <code>List&lt;T></code>:
       <pre class="prettyprint">
+        
   package example
   
   uses java.util.List
@@ -89,6 +93,7 @@
       <p>
       Unlike in Java, type variables <em>can</em> be used in general expressions in Gosu.  In Enhancements, the type variables are statically, rather than dynamically, reified, much like enhancement methods are statically, rather than dynamically dispatched.  The enhancement method <code>toTypedArray():T[]</code> on <code>Iterable&lt;T></code> demonstrates this:
       <pre class="prettyprint">
+        
   var lstOfStrings : List&lt;String> = {"a", "b", "c"}
   var arrOfStrings = lstOfStrings.toTypedArray() //returns a String[]
   
@@ -101,6 +106,7 @@
       <h3>Enhancing Parameterized Types</h3>
       <p>A really neat trick with enhancements is that you can enhance <em>parameterized</em> types:</p>
       <pre class="prettyprint">
+        
   package example
   
   uses java.util.*

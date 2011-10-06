@@ -46,26 +46,30 @@
       <h2>Strings</h2>
       <p>In Gosu, strings can be delimited with either a single or double quote.  This allows you to embed the other character without any awkward escaping:
       <pre class="prettyprint">
+        
   var strWithDoubleQuote = 'This is a "string"'
   var strWithSingleQuote = "This is a 'string'"
       </pre>
       You can, of course, use the <code>+</code> operator to concatenate:
       <pre class="prettyprint">
+        
   print( "Hello" + " " + "World" )
       </pre>
       You can also use <a href="http://onjava.com/pub/a/onjava/2003/11/05/jsp.html">JSP 2.0-style</a> template syntax for including values in strings:      
       <pre class="prettyprint">
+        
   var world = "World"
   print( "Hello ${world}" )
       </pre>
       <h3>String Conversions</h3>
       <p>Strings have a bunch of methods that can be used to convert them to other data types.  Here are some examples:
       <pre class="prettyprint">
+        
   var bool = "true".toBoolean()
   var i = "42".toInt()
   var d = "1/1/2001".toDate()
       </pre>
-      These methods are added to <code>java.lang.String</code> via Enhancements, which we will talk about next.  Usually they just chain through to some standard Java API that has been helpfully hidden in some obscure location.</p>
+      These methods are added to <code>java.lang.String</code> via Enhancements, which we will talk about next.  Usually they just chain through to some standard Java API that has been hidden away in some obscure location.</p>
       <h3>Other String Enhancements</h3>
       <p>In addition to the <code>.to*</code> methods for conversions, a bunch of other useful methods have been added to Strings.  Here is a sampling:</p>
       <ul>
@@ -81,13 +85,15 @@
       <p>
         Gosu supports string templates as first class citizens in the language.  A Gosu String Template is a file that ends in the <code>.gst</code> extension.  Here is an example definition, <code>sample.Sample.gst</code>:
       <pre class="prettyprint">
-&lt;% params( names : String[] ) %>
-All Names: &lt;% for( name in names ) { %>
-  * ${name} 
-&lt;% } %>
+        
+  &lt;% params( names : String[] ) %>
+  All Names: &lt;% for( name in names ) { %>
+    * ${name} 
+  &lt;% } %>
       </pre>
-      The template explicitly declared the names and types of its arguments.
+      The template explicitly declares the names and types of its arguments.  You can render the template by calling the <code>render()</code> or <code>renderToString()</code> methods:
       <pre class="prettyprint">
+        
   var str = sample.Sample.renderToString( {"Joe", "John", "Josh"} )
       </pre>
       Note that the static <code>renderToString()</code> method is statically typed, and takes exactly the parameters specified by the template, so everything is type checked.
@@ -98,16 +104,19 @@ All Names: &lt;% for( name in names ) { %>
       <p>
       Here is how you read a File:
       <pre class="prettyprint">
+        
   var f = new File( "/tmp/temp.txt")
   var content = f.read()
       </pre>
       and here is how you write a File:
       <pre class="prettyprint">
+        
   var f = new File( "/tmp/temp.txt")
   var content = f.write( "It's so crazy, it just might work..." )
       </pre>
       and here is how you read a file a line at a time:
       <pre class="prettyprint">
+        
   var f = new File( "/tmp/temp.txt")
   var content = f.eachLine( \ s -> print( s ) )
       </pre>
@@ -116,14 +125,15 @@ All Names: &lt;% for( name in names ) { %>
       <p>Files have some other useful tricks added to them as well.  Play around with them to see.</p>
       
       <h2>Interacting With The OS</h2>
-      <p>Sun doesn't want you to interact with the OS, except via standard Java APIs.  While standardized APIs are great, there are times when push comes to shove and you must compromise principle in the name of expediency, like when you are doing systems scripting.<p>
-        </p>Gosu provides a class, <code>gw.util.Shell</code>, to make working with the underlying OS much easier:
+      <p>Sun doesn't want you to interact with the OS, except via standard Java APIs.  While standardized APIs are great, there are times when push comes to shove and you just need to exec something.<p>
+        </p>Gosu provides a class, <code>gw.util.Shell</code>, to make this easy:
       <pre class="prettyprint">
+        
   uses gw.util.Shell
   
   listingOfDir = Shell.exec( "ls" )
       </pre>
-      <code>Shell</code> has other methods for more elaborate interaction with the OS if necessary.
+      <code>Shell</code> has other methods for more elaborate interactions with the OS if necessary.
       </p>
     </div>
   </body>
