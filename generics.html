@@ -89,7 +89,7 @@
   package example
   
   class MyGenericClass&lt;T> {
-    _tee : T as readonly Tee
+    var _tee : T as readonly Tee
     
     construct( tee : T ) {
       _tee = tee
@@ -102,7 +102,7 @@
    package example
 
    class MyGenericClass&lt;T extends Runnable> {
-     _tee : T as readonly Tee
+     var _tee : T as readonly Tee
 
      construct( tee : T ) {
        _tee = tee
@@ -118,7 +118,7 @@
   uses gw.lang.reflect.IType
   
   class MyGenericClass&lt;T> {
-    _tee : T as readonly Tee
+    var _tee : T as readonly Tee
 
     construct( tee : T ) {
       _tee = tee
@@ -136,7 +136,7 @@
   package example
 
   class MyGenericClass&lt;T> {
-    _tee : T as readonly Tee
+    var _tee : T as readonly Tee
 
     construct( tee : T ) {
       _tee = tee
