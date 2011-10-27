@@ -98,7 +98,7 @@
   var arrOfStrings = lstOfStrings.toTypedArray() //returns a String[]
   
   var lstOfObjs : List&lt;Object> = lstOfStrings //type variables are covariant in Gosu, see <a href="generics.html">generics</a>        
-  var arrOfObjs = lstOfStrings.toTypedArray() //returns an Object[]
+  var arrOfObjs = lstOfObjs.toTypedArray() //returns an Object[]
       </pre>
       This "best effort" reification usually does what you want, but can occasionally lead to surprising results.
       </p>
